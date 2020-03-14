@@ -1,0 +1,15 @@
+{% extends "layout.html" %}
+{% block content %}
+  <div class="content-section">
+    <a class="btn btn-primary" href="{{ url_for('add_item') }}">Dodaj pozycję</a>
+  </div>
+	{% for book in books %}
+    <div class="content-section">
+      <div>
+        <a class="mr-2" href="{{ url_for('item', item_id=book.isbn) }}">{{ book.title }}</a>
+        <p>Author: {{ book.author }}</p>
+        <p>{{ book.description }}</p>
+      </div>
+    </div>
+	{% endfor %}
+{% endblock content %}

@@ -27,5 +27,8 @@ Aplikacja biblioteki służy użytkownikom do zarządzania zasobami, zamawiania 
 
 #### Backend
 - server Flask
+  - https://flask.palletsprojects.com/en/1.1.x/
 - dane zapisane w SQLite3
+  - https://flask.palletsprojects.com/en/1.1.x/tutorial/database/
 - szablony Jinja2
+  - https://jinja.palletsprojects.com/en/2.11.x/templates/

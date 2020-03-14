@@ -1,0 +1,17 @@
+{% extends "layout.html" %}
+{% block content %}
+  <article class="media content-section">
+    <div>
+      <table class="table table-borderless table-sm">
+        <tbody>
+        {% for data in item %}
+          <tr>
+            <td>{{ data[0]|upper }}{{ data[1:] }}:</td>
+            <td>{{ item[data] }}</td>
+          </tr>
+        {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </article>
+{% endblock content %}
