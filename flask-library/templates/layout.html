@@ -3,11 +3,13 @@
 <head>
   <meta charset="UTF-8">
   <title>{% block title %}{% endblock %} - Flibre</title>
+  <link href="/static/style.css" rel="stylesheet" type="text/css" />
 </head>
 <body>
   <nav>
     <a href="/">Home</a>
     <a href="catalog">Catalog</a>
+    <a href="catalog/add_item">Add item</a>
   </nav>
   {% block content %}
   {% endblock %}

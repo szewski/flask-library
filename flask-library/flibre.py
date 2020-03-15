@@ -38,5 +38,4 @@ def add_item_post():
 
 
 if __name__ == '__main__':
-    # pass
     app.run(debug=True)

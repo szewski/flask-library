@@ -1,0 +1,46 @@
+* {
+  font-family: sans-serif;
+}
+
+body {
+  background: #A1C750;
+}
+
+form {
+  margin: 0 auto;
+  width: 30%;
+  padding: 1em;
+  border: 1px solid #CCC;
+}
+
+form div + div {
+  margin-top: 1em;
+}
+
+input {
+  width: 296px;
+}
+
+label {
+  /* Uniform size & alignment */
+  display: inline-block;
+  width: 90px;
+  text-align: right;
+}
+
+textarea {
+  width: 300px;
+  box-sizing: border-box;
+  height: 5em;
+  vertical-align: top;
+  resize: none;
+}
+
+.form-field {
+  text-align: center;
+}
+
+.button {
+  padding-left: 90px;
+  text-align: center;
+}

@@ -3,24 +3,44 @@
 
 {% block content %}
   <form action="add_item_post" method="post">
-    ISBN:<input type="text" name="isbn">
-    <br>
-    Title:<input type="text" name="title">
-    <br>
-    Subtitle:<input type="text" name="subtitle">
-    <br>
-    Author:<input type="text" name="author">
-    <br>
-    Published:<input type="text" name="published">
-    <br>
-    Publisher:<input type="text" name="publisher">
-    <br>
-    Pages:<input type="number" name="pages">
-    <br>
-    Description:<input type="text" name="description">
-    <br>
-    Website:<input type="text" name="website">
-    <br>
-    <input type="submit">
+    <div class="form-field">
+      <label for="isbn">ISBN:</label>
+      <input id="isbn" type="text" name="isbn">
+    </div>
+    <div class="form-field">
+      <label for="title">Title:</label>
+      <input id="title" type="text" name="title">
+    </div>
+    <div class="form-field">
+      <label for="subtitle">Subtitle:</label>
+      <input id="subtitle" type="text" name="subtitle">
+    </div>
+    <div class="form-field">
+      <label for="author">Author:</label>
+      <input id="author" type="text" name="author">
+    </div>
+    <div class="form-field">
+      <label for="published">Published:</label>
+      <input id="published" type="text" name="published">
+    </div>
+    <div class="form-field">
+      <label for="publisher">Publisher:</label>
+      <input id="publisher" type="text" name="publisher">
+    </div>
+    <div class="form-field">
+      <label for="pages">Pages:</label>
+      <input id="pages" type="number" name="pages">
+    </div>
+    <div class="form-field">
+      <label for="description">Description:</label>
+      <textarea id="description" type="text" name="description"></textarea>
+    </div>
+    <div class="form-field">
+      <label for="website">Website:</label>
+      <input id="website" type="text" name="website">
+    </div>
+    <div class="button">
+      <input type="submit">
+    </div>
   </form>
 {% endblock %}
