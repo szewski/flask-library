@@ -1,0 +1,25 @@
+{% extends 'layout.html' %}
+{% block title %}Catalog{% endblock %}
+
+{% block content %}
+  <table>
+    <tr>
+      <th>ID</th>
+      <th>Author</th>
+      <th>Publisher</th>
+      <th>Title</th>
+      <th>Pages</th>
+      <th>Description</th>
+    </tr>
+    {% for book in books %}
+      <tr>
+        <td>{{ loop.index }}</td>
+        <td>{{ book['author'] }}</td>
+        <td>{{ book['publisher'] }}</td>
+        <td>{{ book['title'] }}</td>
+        <td>{{ book['pages'] }}</td>
+        <td>{{ book['description'] }}</td>
+      </tr>
+    {% endfor %}
+  </table>
+{% endblock %}
