@@ -25,5 +25,5 @@ class Database:
 
 
 if __name__ == '__main__':
-    db = Database('database.json')
+    db = Database('db/database.json')
     print(db._is_json_format())
