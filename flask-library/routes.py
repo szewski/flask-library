@@ -20,7 +20,7 @@ def catalog():
     return render_template('catalog.html', **context)
 
 
-@app.route('/catalog/add_item')
+@app.route('/catalog/add_book')
 def add_book():
     return render_template('add_book.html')
 
