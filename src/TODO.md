@@ -23,17 +23,17 @@
 #### 17/03
 - [ ] SQLAlchemy tutorial
 
-#### 18/03
+#### 
 - [ ] implement SQlite database
 - [ ] Rewrite books json to SQLite database
 
-#### 19/03
+#### 
 - [ ] Flask-User tutorial
 
-#### 20/03
+#### 
 - [ ] Implement Flask-User
 
-#### 21/03
+#### 
 - [ ] Create Login page
 - [ ] Create Register page
 - [ ] Create Profile page
