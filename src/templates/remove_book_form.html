@@ -1,0 +1,14 @@
+{% extends "layout.html" %}
+{% block title %}Remove book{% endblock %}
+
+{% block content %}
+  <form action="remove_book_post" method="post">
+    <div class="form-field">
+      <label for="id">ID:</label>
+      <input id="id" type="text" name="id">
+    </div>
+    <div class="form-field">
+      <input class="button" type="submit">
+    </div>
+  </form>
+{% endblock %}

@@ -21,11 +21,24 @@
 - [x] Rewrite sample json to database
 
 #### 17/03
-- [ ] SQLAlchemy tutorial
+- [x] SQLAlchemy tutorial
 
 #### 
-- [ ] implement SQlite database
-- [ ] Rewrite books json to SQLite database
+- [x] implement SQlite database
+- [x] Rewrite books json to SQLite database
+
+#### 08/05
+- [x] implement SQLAlchemy
+    - [x] conn func
+    - [x] db books model
+    - [x] update functions
+- [x] add Delete book route 
+
+#### 9/05
+- [ ] add login page
+- [ ] check if users exists in db
+- [ ] add cookies
+
 
 #### 
 - [ ] Flask-User tutorial

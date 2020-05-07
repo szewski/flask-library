@@ -15,7 +15,8 @@ CREATE TABLE "users" (
     "id" INTEGER PRIMARY KEY AUTOINCREMENT,
     "username" TEXT NOT NULL,
     "email" TEXT NOT NULL,
-    "password" TEXT NOT NULL
+    "password" TEXT NOT NULL,
+    "cookie_id" TEXT NOT NULL
 );
 
 CREATE TABLE "users_to_books" (
