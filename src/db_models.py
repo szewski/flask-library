@@ -39,14 +39,14 @@ class User(Base):
     username = Column(String(50))
     email = Column(String(255))
     password = Column(String(255))
-    cookie_id = Column(String(255))
+    permission_lvl = Column(Integer)
 
     def __repr__(self):
-        return f'User(id={self.id}' \
-               f'username=\'{self.username}\'' \
-               f'email=\'{self.email}\'' \
-               f'password=\'{self.password}\'' \
-               f'cookie_id=\'{self.cookie_id}\')'
+        return f'User(id={self.id}, ' \
+               f'username=\'{self.username}\', ' \
+               f'email=\'{self.email}\', ' \
+               f'password=\'{self.password}\', ' \
+               f'permission_lvl=\'{self.permission_lvl}\')'
 
 
 class UserToBook(Base):

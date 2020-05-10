@@ -16,7 +16,7 @@ CREATE TABLE "users" (
     "username" TEXT NOT NULL,
     "email" TEXT NOT NULL,
     "password" TEXT NOT NULL,
-    "cookie_id" TEXT NOT NULL
+    "permission_lvl" INTEGER NOT NULL
 );
 
 CREATE TABLE "users_to_books" (
@@ -28,3 +28,7 @@ CREATE TABLE "users_to_books" (
     FOREIGN KEY ("book_id") REFERENCES "books" ("id")
 );
 
+INSERT INTO "users" VALUES
+    (NULL, "admin", "admin@flibre.com", "admin", 1),
+    (NULL, "user", "user@flibre.com", "user", 2),
+    (NULL, "guest", "guest@flibre.com", "guest", 3);

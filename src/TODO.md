@@ -34,22 +34,17 @@
     - [x] update functions
 - [x] add Delete book route 
 
-#### 9/05
-- [ ] add login page
-- [ ] check if users exists in db
+#### 10/05
+- [x] add login page
+- [x] add register page
+- [x] check if users exists in db
+- [ ] add logout button
+
+- [ ] add flash messages to login and register
 - [ ] add cookies
 
 
-#### 
-- [ ] Flask-User tutorial
 
-#### 
-- [ ] Implement Flask-User
-
-#### 
-- [ ] Create Login page
-- [ ] Create Register page
-- [ ] Create Profile page
 
 
 Else:

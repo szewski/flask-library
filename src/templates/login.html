@@ -1,0 +1,13 @@
+{% extends 'layout.html' %}
+{% block title %}Login{% endblock %}
+
+{% block content %}
+    <h1>Logowanie:</h1>
+    <form method="post" action="">
+        nazwa użytkownika:
+        <input type="text" name="username" required>
+        hasło:
+        <input type="password" name="password" required>
+        <input type="submit">
+    </form>
+{% endblock %}
