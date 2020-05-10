@@ -38,12 +38,13 @@
 - [x] add login page
 - [x] add register page
 - [x] check if users exists in db
-- [ ] add logout button
+- [x] add logout button
 
 - [ ] add flash messages to login and register
 - [ ] add cookies
 
-
+- [ ] add borrow option
+- [ ] add return option
 
 
 

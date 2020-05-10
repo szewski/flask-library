@@ -2,10 +2,25 @@ from flask import Flask, render_template, url_for, redirect, request, session, g
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 from db_models import User, Book, UserToBook
-from werkzeug.security import check_password_hash
+from werkzeug.security import check_password_hash, generate_password_hash
 
 
 app = Flask(__name__)
+app.secret_key = 'super_tajny_klucz_123'
+
+
+def authorized(lvl=3):
+    if not session:
+        if lvl == 3:
+            return True
+        return False
+    DBsession = get_session()
+    user_data = DBsession.query(User).filter(
+        User.username == session['username']) \
+        .one()
+    if user_data.permission_lvl <= lvl:
+        return True
+    return False
 
 
 def get_session(echo=False):
@@ -63,6 +78,12 @@ def add_book():
 
 @app.route('/catalog/books/remove_book', methods=['GET', 'POST'])
 def remove_book():
+    if not authorized(1):
+        return render_template('access_denied.html')
+
+    if not session:
+        return redirect(url_for('login'))
+
     if request.method == 'GET':
         return render_template('remove_book.html')
 
@@ -85,10 +106,12 @@ def login():
         return render_template('login.html')
 
     if request.method == 'POST':
+        DBsession = get_session()
+
         username = request.form['username']
         pwd = request.form['password']
 
-        user_data = session.query(User).filter(User.username == username).one()
+        user_data = DBsession.query(User).filter(User.username == username).one()
 
         if user_data:
             hashed_password = user_data.password
@@ -129,9 +152,8 @@ def register():
             return render_template('register.html')
 
         new_user = User()
-
         new_user.username = username
-        new_user.password = pwd
+        new_user.password = generate_password_hash(pwd)
         new_user.email = email
         new_user.permission_lvl = permission_lvl
 
@@ -139,6 +161,17 @@ def register():
         DBsession.commit()
 
         return redirect(url_for('login'))
+
+
+@app.route('/logout')
+def logout():
+    session.clear()
+    return redirect(url_for('login'))
+
+
+@app.route('/access_denied')
+def access_denied():
+    return render_template('access_denied.html')
 
 
 if __name__ == '__main__':
