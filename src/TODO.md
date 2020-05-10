@@ -46,6 +46,7 @@
 - [ ] add borrow option
 - [ ] add return option
 
+- [ ] hide navigation buttons when not authorized / logged in
 
 
 Else:

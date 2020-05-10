@@ -9,16 +9,33 @@ app = Flask(__name__)
 app.secret_key = 'super_tajny_klucz_123'
 
 
-def authorized(lvl=3):
+def get_username():
+    if session:
+        return session['username']
+    return None
+
+
+def default_context():
+    permission_lvl = get_user_auth_lvl()
+    username = get_username()
+    context = {'permission_lvl': permission_lvl,
+               'username': username}
+    return context
+
+
+def get_user_auth_lvl():
     if not session:
-        if lvl == 3:
-            return True
-        return False
+        return 3
+
     DBsession = get_session()
-    user_data = DBsession.query(User).filter(
-        User.username == session['username']) \
-        .one()
-    if user_data.permission_lvl <= lvl:
+    user_data = DBsession.query(User) \
+                .filter(User.username == session['username']) \
+                .one()
+    return user_data.permission_lvl
+
+
+def authorized(lvl=3):
+    if get_user_auth_lvl() <= lvl:
         return True
     return False
 
@@ -32,7 +49,8 @@ def get_session(echo=False):
 @app.route('/')
 @app.route('/index')
 def index():
-    return render_template('index.html')
+    context = default_context()
+    return render_template('index.html', **context)
 
 
 @app.route('/catalog/books')
@@ -40,7 +58,10 @@ def books():
     DBsession = get_session()
     books = DBsession.query(Book).all()
 
-    return render_template('catalog.html', books=books)
+    context = default_context()
+    context['books'] = books
+
+    return render_template('catalog.html', **context)
 
 
 @app.route('/catalog/books/<int:book_id>')
@@ -48,13 +69,19 @@ def book(book_id):
     DBsession = get_session()
     mybook = DBsession.query(Book).filter(Book.id == book_id).one()
 
-    return render_template('book.html', book=mybook)
+    context = default_context()
+    context['book'] = mybook
+    return render_template('book.html', **context)
 
 
 @app.route('/catalog/books/add_book', methods=['GET', 'POST'])
 def add_book():
+    if not authorized(1):
+        return access_denied()
+
     if request.method == 'GET':
-        return render_template('add_book.html')
+        context = default_context()
+        return render_template('add_book.html', **context)
 
     if request.method == 'POST':
         DBsession = get_session()
@@ -73,19 +100,21 @@ def add_book():
 
         DBsession.add(new_book)
         DBsession.commit()
+
         return redirect(url_for('books'))
 
 
 @app.route('/catalog/books/remove_book', methods=['GET', 'POST'])
 def remove_book():
     if not authorized(1):
-        return render_template('access_denied.html')
+        return access_denied()
 
     if not session:
         return redirect(url_for('login'))
 
     if request.method == 'GET':
-        return render_template('remove_book.html')
+        context = default_context()
+        return render_template('remove_book.html', **context)
 
     if request.method == 'POST':
         book_id = request.form['id']
@@ -103,7 +132,8 @@ def remove_book():
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     if request.method == 'GET':
-        return render_template('login.html')
+        context = default_context()
+        return render_template('login.html', **context)
 
     if request.method == 'POST':
         DBsession = get_session()
@@ -128,10 +158,12 @@ def login():
 @app.route('/register', methods=['GET', 'POST'])
 def register():
     if request.method == 'GET':
-        return render_template('register.html')
+        context = default_context()
+        return render_template('register.html', **context)
 
     if request.method == 'POST':
         DBsession = get_session()
+        err = False
 
         username = request.form['username']
         pwd = request.form['password']
@@ -141,15 +173,19 @@ def register():
 
         if DBsession.query(User).filter(User.username == username).scalar():
             print('User already exists')
-            return render_template('register.html')
+            err = True
 
         if DBsession.query(User).filter(User.email == email).scalar():
             print('Email already exists')
-            return render_template('register.html')
+            err = True
 
         if pwd != pwd_repeat:
             print('Password doesn\'t match')
-            return render_template('register.html')
+            err = True
+
+        if err:
+            context = default_context()
+            return render_template('register.html', **context)
 
         new_user = User()
         new_user.username = username
@@ -171,7 +207,9 @@ def logout():
 
 @app.route('/access_denied')
 def access_denied():
-    return render_template('access_denied.html')
+    context = default_context()
+    print(context)
+    return render_template('access_denied.html', **context)
 
 
 if __name__ == '__main__':
