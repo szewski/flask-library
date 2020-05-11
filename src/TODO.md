@@ -41,12 +41,12 @@
 - [x] add logout button
 
 - [ ] add flash messages to login and register
-- [ ] add cookies
+- [x] add cookies
 
-- [ ] add borrow option
+- [x] add borrow option
 - [ ] add return option
 
-- [ ] hide navigation buttons when not authorized / logged in
+- [x] hide navigation buttons when not authorized / logged in
 
 
 Else:

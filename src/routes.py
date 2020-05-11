@@ -1,7 +1,7 @@
 from flask import Flask, render_template, url_for, redirect, request, session, g
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
-from db_models import User, Book, UserToBook
+from db_models import User, Book
 from werkzeug.security import check_password_hash, generate_password_hash
 
 
@@ -21,6 +21,17 @@ def default_context():
     context = {'permission_lvl': permission_lvl,
                'username': username}
     return context
+
+
+def get_user_id():
+    if not session:
+        return None
+
+    DBsession = get_session()
+    user_data = DBsession.query(User) \
+                .filter(User.username == session['username']) \
+                .one()
+    return user_data.id
 
 
 def get_user_auth_lvl():
@@ -208,8 +219,31 @@ def logout():
 @app.route('/access_denied')
 def access_denied():
     context = default_context()
-    print(context)
     return render_template('access_denied.html', **context)
+
+
+@app.route('/catalog/books/borrow', methods=["POST"])
+def borrow_book():
+    if not authorized(2):
+        return access_denied()
+
+    if not session:
+        return redirect(url_for('login'))
+
+    DBsession = get_session()
+    book_id = request.form['book_id']
+
+    update = DBsession.query(Book) \
+                .filter(Book.id == book_id) \
+                .update({'user_id': get_user_id()})
+    DBsession.commit()
+
+    return redirect(url_for('books'))
+
+
+@app.route('/catalog/books/return', methods=["POST"])
+def return_book():
+    pass
 
 
 if __name__ == '__main__':

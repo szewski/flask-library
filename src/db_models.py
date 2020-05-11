@@ -18,6 +18,8 @@ class Book(Base):
     subtitle = Column(String(255))
     title = Column(String(255))
     website = Column(String(255))
+    user_id = Column(Integer, ForeignKey('users.id'))
+    user_ref = relationship('User', back_populates='book_ref')
 
     def __repr__(self):
         return f'Book(id={self.id}, ' \
@@ -40,6 +42,7 @@ class User(Base):
     email = Column(String(255))
     password = Column(String(255))
     permission_lvl = Column(Integer)
+    book_ref = relationship('Book', back_populates='user_ref')
 
     def __repr__(self):
         return f'User(id={self.id}, ' \
@@ -47,18 +50,3 @@ class User(Base):
                f'email=\'{self.email}\', ' \
                f'password=\'{self.password}\', ' \
                f'permission_lvl=\'{self.permission_lvl}\')'
-
-
-class UserToBook(Base):
-    __tablename__ = 'users_to_books'
-
-    id = Column(Integer, primary_key=True)
-    user_id = Column(Integer, primary_key=True)
-    book_id = Column(Integer, primary_key=True)
-    borrow_date = Column(Date)
-
-    def __repr__(self):
-        return f'UserToBook(id={self.id}' \
-               f'user_id={self.user_id}' \
-               f'book_id={self.book_id}\'' \
-               f'borrow_date=\'{self.borrow_date}\')'
