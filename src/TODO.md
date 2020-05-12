@@ -40,13 +40,21 @@
 - [x] check if users exists in db
 - [x] add logout button
 
-- [ ] add flash messages to login and register
+- [x] hide navigation buttons when not authorized / logged in
 - [x] add cookies
 
 - [x] add borrow option
-- [ ] add return option
+- [x] add return option
+- [x] hide borrow option when borrowed
+- [x] change submit button name
+- [x] add return book if borrowed by current user
 
-- [x] hide navigation buttons when not authorized / logged in
+
+- [ ] create user profile page
+- [ ] show borrowed books on user profile page
+- [ ] add option to return books from user profile
+- [ ] add links to book title in catalog
+- [ ] add flash messages to login and register
 
 
 Else:

@@ -17,9 +17,9 @@ def get_username():
 
 def default_context():
     permission_lvl = get_user_auth_lvl()
-    username = get_username()
     context = {'permission_lvl': permission_lvl,
-               'username': username}
+               'user_id': get_user_id(),
+               'username': get_username()}
     return context
 
 
@@ -231,7 +231,7 @@ def borrow_book():
         return redirect(url_for('login'))
 
     DBsession = get_session()
-    book_id = request.form['book_id']
+    book_id = request.form['borrow_book_id']
 
     update = DBsession.query(Book) \
                 .filter(Book.id == book_id) \
@@ -243,7 +243,21 @@ def borrow_book():
 
 @app.route('/catalog/books/return', methods=["POST"])
 def return_book():
-    pass
+    if not authorized(2):
+        return access_denied()
+
+    if not session:
+        return redirect(url_for('login'))
+
+    DBsession = get_session()
+    book_id = request.form['return_book_id']
+
+    update = DBsession.query(Book) \
+                .filter(Book.id == book_id) \
+                .update({'user_id': None})
+    DBsession.commit()
+
+    return redirect(url_for('books'))
 
 
 if __name__ == '__main__':

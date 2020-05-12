@@ -28,9 +28,13 @@
       <td>{{ book['website'] }}</td>
     </tr>
   </table>
-
+  {% if book['user_id'] != user_id %}
   <form action="/catalog/books/borrow" method="POST">
-    <input type="hidden" name="book_id" value="{{ book['id'] }}"/>
-    <input type="submit" name="Borrow">
+    <button name="borrow_book_id" type="submit" value="{{ book['id'] }}">Borrow</button>
   </form>
+  {% else %}
+  <form action="/catalog/books/return" method="POST">
+    <button name="return_book_id" type="submit" value="{{ book['id'] }}">Return</button>
+  </form>
+  {% endif %}
 {% endblock %}
