@@ -28,11 +28,11 @@
       <td>{{ book['website'] }}</td>
     </tr>
   </table>
-  {% if book['user_id'] != user_id %}
+  {% if book['user_id'] == None %}
   <form action="/catalog/books/borrow" method="POST">
     <button name="borrow_book_id" type="submit" value="{{ book['id'] }}">Borrow</button>
   </form>
-  {% else %}
+  {% elif book['user_id'] == user_id %}
   <form action="/catalog/books/return" method="POST">
     <button name="return_book_id" type="submit" value="{{ book['id'] }}">Return</button>
   </form>
