@@ -4,20 +4,14 @@
 {% block content %}
   <table>
     <tr>
-<!--      <th>ID</th>-->
       <th>Author</th>
-<!--      <th>Publisher</th>-->
       <th>Title</th>
-<!--      <th>Pages</th>-->
       <th>Description</th>
     </tr>
     {% for book in books %}
       <tr>
-<!--        <td>{{ loop.index }}</td>-->
         <td>{{ book['author'] }}</td>
-<!--        <td>{{ book['publisher'] }}</td>-->
         <td><a href="/catalog/books/{{ book['id'] }}">{{ book['title'] }}</a></td>
-<!--        <td>{{ book['pages'] }}</td>-->
         <td>{{ book['description'] }}</td>
       </tr>
     {% endfor %}

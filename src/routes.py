@@ -1,5 +1,5 @@
 from flask import Flask, render_template, url_for, redirect, request, session, g
-from sqlalchemy import create_engine
+from sqlalchemy import create_engine, or_, and_
 from sqlalchemy.orm import sessionmaker
 from db_models import User, Book
 from werkzeug.security import check_password_hash, generate_password_hash
@@ -9,13 +9,7 @@ app = Flask(__name__)
 app.secret_key = 'super_tajny_klucz_123'
 
 
-def get_username():
-    if session:
-        return session['username']
-    return None
-
-
-def default_context():
+def get_default_context():
     permission_lvl = get_user_auth_lvl()
     context = {'permission_lvl': permission_lvl,
                'user_id': get_user_id(),
@@ -23,79 +17,100 @@ def default_context():
     return context
 
 
+def get_username():
+    if session:
+        return session['username']
+    return None
+
+
 def get_user_id():
     if not session:
         return None
 
-    DBsession = get_session()
-    user_data = DBsession.query(User) \
+    db_session = get_session()
+    user_data = db_session.query(User) \
                 .filter(User.username == session['username']) \
                 .one()
     return user_data.id
+
+
+def user_exists(username):
+    db_session = get_session()
+    exists = db_session.query(User.id).filter_by(username=username).scalar() is not None
+    return exists
 
 
 def get_user_auth_lvl():
     if not session:
         return 3
 
-    DBsession = get_session()
-    user_data = DBsession.query(User) \
+    db_session = get_session()
+    user_data = db_session.query(User) \
                 .filter(User.username == session['username']) \
                 .one()
     return user_data.permission_lvl
 
 
-def authorized(lvl=3):
+def is_borrowed(book_id):
+    db_session = get_session()
+    result = db_session.query(Book) \
+        .filter(and_(Book.id == book_id, Book.user_id == None)) \
+        .scalar()
+
+    return True if result is None else False
+
+
+def is_authorized(lvl=3):
     if get_user_auth_lvl() <= lvl:
         return True
     return False
 
 
-def get_session(echo=False):
+def get_session(echo=True):
     engine = create_engine('sqlite:///db/database.db', echo=echo)
-    DBsession = sessionmaker(bind=engine)
-    return DBsession()
+    db_session = sessionmaker(bind=engine)
+    return db_session()
 
 
 @app.route('/')
 @app.route('/index')
 def index():
-    context = default_context()
+    context = get_default_context()
     return render_template('index.html', **context)
 
 
 @app.route('/catalog/books')
 def books():
-    DBsession = get_session()
-    books = DBsession.query(Book).all()
+    db_session = get_session()
+    all_books = db_session.query(Book).all()
 
-    context = default_context()
-    context['books'] = books
+    context = get_default_context()
+    context['books'] = all_books
 
     return render_template('catalog.html', **context)
 
 
 @app.route('/catalog/books/<int:book_id>')
 def book(book_id):
-    DBsession = get_session()
-    mybook = DBsession.query(Book).filter(Book.id == book_id).one()
+    db_session = get_session()
+    mybook = db_session.query(Book).filter(Book.id == book_id).one()
 
-    context = default_context()
+    context = get_default_context()
     context['book'] = mybook
     return render_template('book.html', **context)
 
 
 @app.route('/catalog/books/add_book', methods=['GET', 'POST'])
 def add_book():
-    if not authorized(1):
+    if not is_authorized(1):
         return access_denied()
 
     if request.method == 'GET':
-        context = default_context()
+        context = get_default_context()
         return render_template('add_book.html', **context)
 
     if request.method == 'POST':
-        DBsession = get_session()
+        db_session = get_session()
 
         new_book = Book()
         new_book.isbn = request.form['isbn']
@@ -109,33 +124,33 @@ def add_book():
         new_book.title = request.form['title']
         new_book.website = request.form['website']
 
-        DBsession.add(new_book)
-        DBsession.commit()
+        db_session.add(new_book)
+        db_session.commit()
 
         return redirect(url_for('books'))
 
 
 @app.route('/catalog/books/remove_book', methods=['GET', 'POST'])
 def remove_book():
-    if not authorized(1):
+    if not is_authorized(1):
         return access_denied()
 
     if not session:
         return redirect(url_for('login'))
 
     if request.method == 'GET':
-        context = default_context()
+        context = get_default_context()
         return render_template('remove_book.html', **context)
 
     if request.method == 'POST':
         book_id = request.form['id']
 
-        DBsession = get_session()
-        DBsession.query(Book). \
+        db_session = get_session()
+        db_session.query(Book). \
             filter(Book.id == book_id) \
             .delete()
 
-        DBsession.commit()
+        db_session.commit()
 
         return redirect(url_for('books'))
 
@@ -143,16 +158,16 @@ def remove_book():
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     if request.method == 'GET':
-        context = default_context()
+        context = get_default_context()
         return render_template('login.html', **context)
 
     if request.method == 'POST':
-        DBsession = get_session()
+        db_session = get_session()
 
         username = request.form['username']
         pwd = request.form['password']
 
-        user_data = DBsession.query(User).filter(User.username == username).one()
+        user_data = db_session.query(User).filter(User.username == username).one()
 
         if user_data:
             hashed_password = user_data.password
@@ -169,11 +184,11 @@ def login():
 @app.route('/register', methods=['GET', 'POST'])
 def register():
     if request.method == 'GET':
-        context = default_context()
+        context = get_default_context()
         return render_template('register.html', **context)
 
     if request.method == 'POST':
-        DBsession = get_session()
+        db_session = get_session()
         err = False
 
         username = request.form['username']
@@ -182,11 +197,11 @@ def register():
         email = request.form['email']
         permission_lvl = 2
 
-        if DBsession.query(User).filter(User.username == username).scalar():
+        if db_session.query(User).filter(User.username == username).scalar():
             print('User already exists')
             err = True
 
-        if DBsession.query(User).filter(User.email == email).scalar():
+        if db_session.query(User).filter(User.email == email).scalar():
             print('Email already exists')
             err = True
 
@@ -195,7 +210,7 @@ def register():
             err = True
 
         if err:
-            context = default_context()
+            context = get_default_context()
             return render_template('register.html', **context)
 
         new_user = User()
@@ -204,8 +219,8 @@ def register():
         new_user.email = email
         new_user.permission_lvl = permission_lvl
 
-        DBsession.add(new_user)
-        DBsession.commit()
+        db_session.add(new_user)
+        db_session.commit()
 
         return redirect(url_for('login'))
 
@@ -218,46 +233,75 @@ def logout():
 
 @app.route('/access_denied')
 def access_denied():
-    context = default_context()
+    context = get_default_context()
     return render_template('access_denied.html', **context)
+
+
+@app.route('/page_not_found')
+def page_not_found():
+    return render_template('404.html')
 
 
 @app.route('/catalog/books/borrow', methods=["POST"])
 def borrow_book():
-    if not authorized(2):
+    if not is_authorized(2):
         return access_denied()
 
     if not session:
         return redirect(url_for('login'))
 
-    DBsession = get_session()
+    db_session = get_session()
     book_id = request.form['borrow_book_id']
 
-    update = DBsession.query(Book) \
-                .filter(Book.id == book_id) \
-                .update({'user_id': get_user_id()})
-    DBsession.commit()
+    if is_borrowed(book_id):
+        return redirect(url_for('book', book_id=book_id))
+
+    db_session.query(Book) \
+        .filter(Book.id == book_id) \
+        .update({'user_id': get_user_id()})
+    db_session.commit()
 
     return redirect(url_for('books'))
 
 
 @app.route('/catalog/books/return', methods=["POST"])
 def return_book():
-    if not authorized(2):
+    if not is_authorized(2):
         return access_denied()
 
     if not session:
         return redirect(url_for('login'))
 
-    DBsession = get_session()
+    db_session = get_session()
     book_id = request.form['return_book_id']
 
-    update = DBsession.query(Book) \
-                .filter(Book.id == book_id) \
-                .update({'user_id': None})
-    DBsession.commit()
+    db_session.query(Book) \
+        .filter(Book.id == book_id) \
+        .update({'user_id': None})
+    db_session.commit()
 
     return redirect(url_for('books'))
+
+
+@app.route('/user/<username>')
+def user_profile(username):
+    db_session = get_session()
+    context = get_default_context()
+
+    if not user_exists(username):
+        return redirect(url_for('page_not_found'))
+
+    borrowed_books = db_session.query(Book).join(User).filter(User.username == username).all()
+
+    context['profile_username'] = username
+    context['borrowed_books'] = borrowed_books
+    return render_template('user_profile.html', **context)
+
+
+@app.route('/test')
+def test_page():
+    result = is_borrowed(4)
+    return str(result)
 
 
 if __name__ == '__main__':
