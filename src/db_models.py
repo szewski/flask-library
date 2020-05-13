@@ -42,6 +42,7 @@ class User(Base):
     email = Column(String(255))
     password = Column(String(255))
     permission_lvl = Column(Integer)
+    book_limit = Column(Integer)
     book_ref = relationship('Book', back_populates='user_ref')
 
     def __repr__(self):
@@ -49,4 +50,5 @@ class User(Base):
                f'username=\'{self.username}\', ' \
                f'email=\'{self.email}\', ' \
                f'password=\'{self.password}\', ' \
+               f'book_limit=\'{self.book_limit}\', ' \
                f'permission_lvl=\'{self.permission_lvl}\')'

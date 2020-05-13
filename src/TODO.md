@@ -55,8 +55,9 @@
 - [x] add links to book title in catalog
 - [x] add is_borrowed column in catalog
 - [x] add option to return books from user profile
-- [ ] check all page titles names
-- [ ] add borrow limit for user
+- [x] check all page titles names
+- [x] add borrow limit for user
+- [x] remove return button from user profile if current user is different
 
 
 #### 14/05 Design

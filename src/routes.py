@@ -9,35 +9,18 @@ app = Flask(__name__)
 app.secret_key = 'super_tajny_klucz_123'
 
 
+def get_session(echo=True):
+    engine = create_engine('sqlite:///db/database.db', echo=echo)
+    db_session = sessionmaker(bind=engine)
+    return db_session()
+
+
 def get_default_context():
     permission_lvl = get_user_auth_lvl()
     context = {'permission_lvl': permission_lvl,
-               'user_id': get_user_id(),
-               'username': get_username()}
+               'user_id': session.get('user_id'),
+               'username': session.get('username')}
     return context
-
-
-def get_username():
-    if session:
-        return session['username']
-    return None
-
-
-def get_user_id():
-    if session:
-        return session['user_id']
-    return None
-    # db_session = get_session()
-    # user_data = db_session.query(User) \
-    #             .filter(User.username == session['username']) \
-    #             .one()
-    # return user_data.id
-
-
-def user_exists(username):
-    db_session = get_session()
-    exists = db_session.query(User.id).filter_by(username=username).scalar() is not None
-    return exists
 
 
 def get_user_auth_lvl():
@@ -45,10 +28,44 @@ def get_user_auth_lvl():
         return 3
 
     db_session = get_session()
-    user_data = db_session.query(User) \
-                .filter(User.username == session['username']) \
+    user_data = db_session.query(User.permission_lvl) \
+                .filter(User.username == session.get('username')) \
                 .one()
     return user_data.permission_lvl
+
+
+def get_borrow_limit():
+    if not session:
+        return None
+
+    db_session = get_session()
+    user_data = db_session.query(User.book_limit) \
+                .filter(User.username == session.get('username')) \
+                .one()
+    return user_data.book_limit
+
+
+def get_borrowed(username):
+    db_session = get_session()
+    return db_session.query(Book).join(User).filter(User.username == username).all()
+
+
+def count_borrowed():
+    return len(get_borrowed())
+
+
+def user_exists(username):
+    db_session = get_session()
+    return db_session.query(User.id).filter_by(username=username).scalar() is not None
+
+
+def is_able_to_borrow():
+    borrow_limit = get_borrow_limit()
+    if borrow_limit == 0:
+        return True
+    if count_borrowed() < borrow_limit:
+        return True
+    return False
 
 
 def is_borrowed(book_id):
@@ -64,12 +81,6 @@ def is_authorized(lvl=3):
     if get_user_auth_lvl() <= lvl:
         return True
     return False
-
-
-def get_session(echo=True):
-    engine = create_engine('sqlite:///db/database.db', echo=echo)
-    db_session = sessionmaker(bind=engine)
-    return db_session()
 
 
 @app.route('/')
@@ -102,6 +113,9 @@ def book(book_id):
 
 @app.route('/catalog/books/add_book', methods=['GET', 'POST'])
 def add_book():
+    if not session:
+        return redirect(url_for('login'))
+
     if not is_authorized(1):
         return access_denied()
 
@@ -132,11 +146,11 @@ def add_book():
 
 @app.route('/catalog/books/remove_book', methods=['GET', 'POST'])
 def remove_book():
-    if not is_authorized(1):
-        return access_denied()
-
     if not session:
         return redirect(url_for('login'))
+
+    if not is_authorized(1):
+        return access_denied()
 
     if request.method == 'GET':
         context = get_default_context()
@@ -244,11 +258,11 @@ def page_not_found():
 
 @app.route('/catalog/books/borrow', methods=["POST"])
 def borrow_book():
-    if not is_authorized(2):
-        return access_denied()
-
     if not session:
         return redirect(url_for('login'))
+
+    if not is_authorized(2):
+        return access_denied()
 
     db_session = get_session()
     book_id = request.form['borrow_book_id']
@@ -256,9 +270,12 @@ def borrow_book():
     if is_borrowed(book_id):
         return redirect(url_for('book', book_id=book_id))
 
+    if not is_able_to_borrow():
+        return redirect(url_for('book', book_id=book_id))
+
     db_session.query(Book) \
         .filter(Book.id == book_id) \
-        .update({'user_id': get_user_id()})
+        .update({'user_id': session.get('user_id')})
     db_session.commit()
 
     return redirect(redirect_url())
@@ -266,11 +283,11 @@ def borrow_book():
 
 @app.route('/catalog/books/return', methods=["POST"])
 def return_book():
-    if not is_authorized(2):
-        return access_denied()
-
     if not session:
         return redirect(url_for('login'))
+
+    if not is_authorized(2):
+        return access_denied()
 
     db_session = get_session()
     book_id = request.form['return_book_id']
@@ -285,16 +302,14 @@ def return_book():
 
 @app.route('/user/<username>')
 def user_profile(username):
-    db_session = get_session()
     context = get_default_context()
 
     if not user_exists(username):
         return redirect(url_for('page_not_found'))
 
-    borrowed_books = db_session.query(Book).join(User).filter(User.username == username).all()
-
     context['profile_username'] = username
-    context['borrowed_books'] = borrowed_books
+    context['borrowed_books'] = get_borrowed(username)
+    context['current_user'] = username == session.get('username')
     return render_template('user_profile.html', **context)
 
 
@@ -306,7 +321,7 @@ def redirect_url(default='index'):
 
 @app.route('/test')
 def test_page():
-    result = is_borrowed(4)
+    result = session.get('username')
     return str(result)
 
 
