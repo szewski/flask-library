@@ -2,24 +2,29 @@
 {% block title %}Profile{% endblock %}
 
 {% block content %}
-<h3>PROFILE</h3>
+<h3>Profile</h3>
 <h1>{{ profile_username }}</h1>
 
 <h4>Borrowed books:</h4>
 <div>
-    <table>
-        <tr>
-            <th>ID</th>
-            <th>Title</th>
-            <th>Description</th>
-        </tr>
-        {% for book in borrowed_books %}
-        <tr>
-            <th>{{ loop.index }}</th>
-            <th>{{ book['title'] }}</th>
-            <th>{{ book['description'] }}</th>
-        </tr>
-        {% endfor %}
-    </table>
+  <table>
+    <tr>
+      <th>ID</th>
+      <th>Title</th>
+      <th>Description</th>
+    </tr>
+    {% for book in borrowed_books %}
+    <tr>
+      <th>{{ loop.index }}</th>
+      <th>{{ book['title'] }}</th>
+      <th>{{ book['description'] }}</th>
+      <th>
+        <form action="/catalog/books/return" method="POST">
+          <button name="return_book_id" type="submit" value="{{ book['id'] }}">Return</button>
+        </form>
+      </th>
+    </tr>
+    {% endfor %}
+  </table>
 </div>
 {% endblock %}

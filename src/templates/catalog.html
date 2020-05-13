@@ -2,18 +2,24 @@
 {% block title %}Catalog{% endblock %}
 
 {% block content %}
-  <table>
-    <tr>
-      <th>Author</th>
-      <th>Title</th>
-      <th>Description</th>
-    </tr>
-    {% for book in books %}
-      <tr>
-        <td>{{ book['author'] }}</td>
-        <td><a href="/catalog/books/{{ book['id'] }}">{{ book['title'] }}</a></td>
-        <td>{{ book['description'] }}</td>
-      </tr>
-    {% endfor %}
-  </table>
+<table>
+  <tr>
+    <th>Author</th>
+    <th>Title</th>
+    <th>Description</th>
+    <th>Borrowed</th>
+  </tr>
+  {% for book in books %}
+  <tr>
+    <td>{{ book['author'] }}</td>
+    <td><a href="/catalog/books/{{ book['id'] }}">{{ book['title'] }}</a></td>
+    <td>{{ book['description'] }}</td>
+    {% if book['user_id'] != None %}
+    <td>Yes</td>
+    {% else %}
+    <td>No</td>
+    {% endif %}
+  </tr>
+  {% endfor %}
+</table>
 {% endblock %}

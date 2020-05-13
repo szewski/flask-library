@@ -53,8 +53,10 @@
 - [x] create user profile page
 - [x] show borrowed books on user profile page
 - [x] add links to book title in catalog
-- [ ] add is_borrowed column in catalog
-- [ ] add option to return books from user profile
+- [x] add is_borrowed column in catalog
+- [x] add option to return books from user profile
+- [ ] check all page titles names
+- [ ] add borrow limit for user
 
 
 #### 14/05 Design

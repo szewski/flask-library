@@ -1,17 +1,17 @@
 {% extends 'layout.html' %}
-{% block title %}Rejestracja{% endblock %}
+{% block title %}Register{% endblock %}
 
 {% block content %}
-    <h1>Rejestracja:</h1>
-    <form method="post" action="">
-        nazwa użytkownika:
-        <input type="text" name="username" required>
-        email:
-        <input type="text" name="email" required>
-        hasło:
-        <input type="password" name="password" required>
-        potwierdź hasło:
-        <input type="password" name="repeat_password" required>
-        <input type="submit">
-    </form>
+<h1>Register:</h1>
+<form method="post" action="">
+  User name:
+  <input type="text" name="username" required>
+  Email:
+  <input type="text" name="email" required>
+  Password:
+  <input type="password" name="password" required>
+  Confirm password:
+  <input type="password" name="repeat_password" required>
+  <input type="submit">
+</form>
 {% endblock %}

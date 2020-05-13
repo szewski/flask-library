@@ -2,39 +2,39 @@
 {% block title %}Book{% endblock %}
 
 {% block content %}
-  <table>
-    <tr>
-      <th>ID</th>
-      <th>Author</th>
-      <th>Description</th>
-      <th>ISBN</th>
-      <th>Pages</th>
-      <th>Published</th>
-      <th>Publisher</th>
-      <th>Subtitle</th>
-      <th>Title</th>
-      <th>Website</th>
-    </tr>
-    <tr>
-      <td>{{ book['id'] }}</td>
-      <td>{{ book['author'] }}</td>
-      <td>{{ book['description'] }}</td>
-      <td>{{ book['isbn'] }}</td>
-      <td>{{ book['pages'] }}</td>
-      <td>{{ book['published'] }}</td>
-      <td>{{ book['publisher'] }}</td>
-      <td>{{ book['subtitle'] }}</td>
-      <td>{{ book['title'] }}</td>
-      <td>{{ book['website'] }}</td>
-    </tr>
-  </table>
-  {% if book['user_id'] == None %}
-  <form action="/catalog/books/borrow" method="POST">
-    <button name="borrow_book_id" type="submit" value="{{ book['id'] }}">Borrow</button>
-  </form>
-  {% elif book['user_id'] == user_id %}
-  <form action="/catalog/books/return" method="POST">
-    <button name="return_book_id" type="submit" value="{{ book['id'] }}">Return</button>
-  </form>
-  {% endif %}
+<table>
+  <tr>
+    <th>ID</th>
+    <th>Author</th>
+    <th>Description</th>
+    <th>ISBN</th>
+    <th>Pages</th>
+    <th>Published</th>
+    <th>Publisher</th>
+    <th>Subtitle</th>
+    <th>Title</th>
+    <th>Website</th>
+  </tr>
+  <tr>
+    <td>{{ book['id'] }}</td>
+    <td>{{ book['author'] }}</td>
+    <td>{{ book['description'] }}</td>
+    <td>{{ book['isbn'] }}</td>
+    <td>{{ book['pages'] }}</td>
+    <td>{{ book['published'] }}</td>
+    <td>{{ book['publisher'] }}</td>
+    <td>{{ book['subtitle'] }}</td>
+    <td>{{ book['title'] }}</td>
+    <td>{{ book['website'] }}</td>
+  </tr>
+</table>
+{% if book['user_id'] == None %}
+<form action="/catalog/books/borrow" method="POST">
+  <button name="borrow_book_id" type="submit" value="{{ book['id'] }}">Borrow</button>
+</form>
+{% elif book['user_id'] == user_id %}
+<form action="/catalog/books/return" method="POST">
+  <button name="return_book_id" type="submit" value="{{ book['id'] }}">Return</button>
+</form>
+{% endif %}
 {% endblock %}

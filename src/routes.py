@@ -24,14 +24,14 @@ def get_username():
 
 
 def get_user_id():
-    if not session:
-        return None
-
-    db_session = get_session()
-    user_data = db_session.query(User) \
-                .filter(User.username == session['username']) \
-                .one()
-    return user_data.id
+    if session:
+        return session['user_id']
+    return None
+    # db_session = get_session()
+    # user_data = db_session.query(User) \
+    #             .filter(User.username == session['username']) \
+    #             .one()
+    # return user_data.id
 
 
 def user_exists(username):
@@ -261,7 +261,7 @@ def borrow_book():
         .update({'user_id': get_user_id()})
     db_session.commit()
 
-    return redirect(url_for('books'))
+    return redirect(redirect_url())
 
 
 @app.route('/catalog/books/return', methods=["POST"])
@@ -280,7 +280,7 @@ def return_book():
         .update({'user_id': None})
     db_session.commit()
 
-    return redirect(url_for('books'))
+    return redirect(redirect_url())
 
 
 @app.route('/user/<username>')
@@ -296,6 +296,12 @@ def user_profile(username):
     context['profile_username'] = username
     context['borrowed_books'] = borrowed_books
     return render_template('user_profile.html', **context)
+
+
+def redirect_url(default='index'):
+    return request.args.get('next') or \
+           request.referrer or \
+           url_for(default)
 
 
 @app.route('/test')
