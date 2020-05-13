@@ -34,7 +34,7 @@
     - [x] update functions
 - [x] add Delete book route 
 
-#### 10/05 - 13/05
+#### 10/05
 - [x] add login page
 - [x] add register page
 - [x] check if users exists in db
@@ -43,37 +43,24 @@
 - [x] hide navigation buttons when not authorized / logged in
 - [x] add cookies
 
+#### 11/05
 - [x] add borrow option
 - [x] add return option
 - [x] hide borrow option when borrowed
 - [x] change submit button name
 - [x] add return book if borrowed by current user
 
-
+#### 12/05
 - [x] create user profile page
 - [x] show borrowed books on user profile page
 - [x] add links to book title in catalog
 - [x] add is_borrowed column in catalog
 - [x] add option to return books from user profile
+
+#### 13/05
 - [x] check all page titles names
 - [x] add borrow limit for user
 - [x] remove return button from user profile if current user is different
-
-
-#### 14/05 Design
-- [ ] remove css and add bootstrap to layout
-
-- [ ] add flash messages to login and register
-- [ ] layout
-- [ ] login and register
-- [ ] catalog
-- [ ] book
-- [ ] add book
-- [ ] remove book
-- [ ] index
-- [ ] user profile
-- [ ] 404
-- [ ] access denied
 
 
 

@@ -34,13 +34,10 @@ def get_user_auth_lvl():
     return user_data.permission_lvl
 
 
-def get_borrow_limit():
-    if not session:
-        return None
-
+def get_borrow_limit(username):
     db_session = get_session()
     user_data = db_session.query(User.book_limit) \
-                .filter(User.username == session.get('username')) \
+                .filter(User.username == username) \
                 .one()
     return user_data.book_limit
 
@@ -50,8 +47,8 @@ def get_borrowed(username):
     return db_session.query(Book).join(User).filter(User.username == username).all()
 
 
-def count_borrowed():
-    return len(get_borrowed())
+def count_borrowed(username):
+    return len(get_borrowed(username))
 
 
 def user_exists(username):
@@ -59,11 +56,11 @@ def user_exists(username):
     return db_session.query(User.id).filter_by(username=username).scalar() is not None
 
 
-def is_able_to_borrow():
-    borrow_limit = get_borrow_limit()
+def is_able_to_borrow(username):
+    borrow_limit = get_borrow_limit(username)
     if borrow_limit == 0:
         return True
-    if count_borrowed() < borrow_limit:
+    if count_borrowed(username) < borrow_limit:
         return True
     return False
 
@@ -270,7 +267,7 @@ def borrow_book():
     if is_borrowed(book_id):
         return redirect(url_for('book', book_id=book_id))
 
-    if not is_able_to_borrow():
+    if not is_able_to_borrow(session.get('username')):
         return redirect(url_for('book', book_id=book_id))
 
     db_session.query(Book) \
