@@ -63,6 +63,8 @@
 - [x] remove return button from user profile if current user is different
 
 
+####
+- [ ] add flash messages to login and register
 
 Else:
 SQL queries, HTML, CSS, bootstrap, javascript 

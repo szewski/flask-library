@@ -1,7 +1,7 @@
 #### 14/05
-- [ ] remove css and add bootstrap to layout
+- [x] remove css and add bootstrap to layout
 
-- [ ] add flash messages to login and register
+- [x] navbar
 - [ ] layout
 - [ ] login and register
 - [ ] catalog
