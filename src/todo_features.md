@@ -65,6 +65,9 @@
 
 ####
 - [ ] add flash messages to login and register
+- [ ] limit user profile view only for admin
+- [ ] add edit option for admin in book view
+
 
 Else:
 SQL queries, HTML, CSS, bootstrap, javascript 
