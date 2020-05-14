@@ -10,7 +10,7 @@ app = Flask(__name__)
 app.config.from_object("config.DevelopmentConfig")
 
 
-def get_session(echo=True):
+def get_session(echo=False):
     engine = create_engine('sqlite:///db/database.db', echo=echo)
     db_session = sessionmaker(bind=engine)
     return db_session()

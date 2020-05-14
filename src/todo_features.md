@@ -62,12 +62,16 @@
 - [x] add borrow limit for user
 - [x] remove return button from user profile if current user is different
 
-
 ####
-- [ ] add flash messages to login and register
-- [ ] limit user profile view only for admin
-- [ ] add edit option for admin in book view
 - [ ] change authorization check to decorator
+- [ ] add flash messages to login and register
+- [ ] add edit option for admin in book view
+- [ ] limit user profile view only for admin
+- [ ] add search feature
+- [ ] add search bar
+
+#### 
+- replace SQLalchemy with Flask-SQLalchemy
 
 
 Else:
