@@ -1,12 +1,13 @@
-from flask import Flask, render_template, url_for, redirect, request, session, g
+from flask import Flask, render_template, url_for, redirect, request, session
 from sqlalchemy import create_engine, or_, and_
 from sqlalchemy.orm import sessionmaker
-from db_models import User, Book
 from werkzeug.security import check_password_hash, generate_password_hash
+
+from db_models import User, Book
 
 
 app = Flask(__name__)
-app.secret_key = 'super_tajny_klucz_123'
+app.config.from_object("config.DevelopmentConfig")
 
 
 def get_session(echo=True):
@@ -323,4 +324,4 @@ def t_page():
 
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run()

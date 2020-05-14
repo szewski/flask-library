@@ -67,6 +67,7 @@
 - [ ] add flash messages to login and register
 - [ ] limit user profile view only for admin
 - [ ] add edit option for admin in book view
+- [ ] change authorization check to decorator
 
 
 Else:
