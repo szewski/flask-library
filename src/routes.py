@@ -317,7 +317,7 @@ def redirect_url(default='index'):
 
 
 @app.route('/test')
-def test_page():
+def t_page():
     result = session.get('username')
     return str(result)
 
