@@ -3,11 +3,14 @@
 
 {% block content %}
 <h1>Login:</h1>
+{% if messages %}
+<div class="alert alert-danger">{{ messages[0] }}</div>
+{% endif %}
 <form method="post" action="">
-  User name:
-  <input type="text" name="username" required>
-  Password:
-  <input type="password" name="password" required>
-  <input type="submit">
+    User name:
+    <input type="text" name="username" required>
+    Password:
+    <input type="password" name="password" required>
+    <input type="submit">
 </form>
 {% endblock %}

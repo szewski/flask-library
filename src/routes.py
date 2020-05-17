@@ -1,4 +1,6 @@
-from flask import Flask, render_template, url_for, redirect, request, session
+from functools import wraps
+
+from flask import Flask, render_template, url_for, redirect, request, session, flash, get_flashed_messages
 from sqlalchemy import create_engine, or_, and_
 from sqlalchemy.orm import sessionmaker
 from werkzeug.security import check_password_hash, generate_password_hash
@@ -25,7 +27,7 @@ def get_default_context():
 
 
 def get_user_auth_lvl():
-    if not session:
+    if not session.get('user_id'):
         return 3
 
     db_session = get_session()
@@ -75,10 +77,17 @@ def is_borrowed(book_id):
     return True if result is None else False
 
 
-def is_authorized(lvl=3):
-    if get_user_auth_lvl() <= lvl:
-        return True
-    return False
+def login_required(lvl=3):
+    def frame(func):
+        @wraps(func)
+        def wrapped_func(*args, **kwargs):
+            if get_user_auth_lvl() <= lvl:
+                return func(*args, **kwargs)
+            else:
+                return redirect('/login')
+        return wrapped_func
+
+    return frame
 
 
 @app.route('/')
@@ -110,13 +119,8 @@ def book(book_id):
 
 
 @app.route('/catalog/books/add_book', methods=['GET', 'POST'])
+@login_required(lvl=1)
 def add_book():
-    if not session:
-        return redirect(url_for('login'))
-
-    if not is_authorized(1):
-        return access_denied()
-
     if request.method == 'GET':
         context = get_default_context()
         return render_template('add_book.html', **context)
@@ -143,13 +147,8 @@ def add_book():
 
 
 @app.route('/catalog/books/remove_book', methods=['GET', 'POST'])
+@login_required(lvl=1)
 def remove_book():
-    if not session:
-        return redirect(url_for('login'))
-
-    if not is_authorized(1):
-        return access_denied()
-
     if request.method == 'GET':
         context = get_default_context()
         return render_template('remove_book.html', **context)
@@ -171,6 +170,8 @@ def remove_book():
 def login():
     if request.method == 'GET':
         context = get_default_context()
+        context['messages'] = get_flashed_messages()
+
         return render_template('login.html', **context)
 
     if request.method == 'POST':
@@ -179,7 +180,7 @@ def login():
         username = request.form['username']
         pwd = request.form['password']
 
-        user_data = db_session.query(User).filter(User.username == username).one()
+        user_data = db_session.query(User).filter(User.username == username).scalar()
 
         if user_data:
             hashed_password = user_data.password
@@ -189,7 +190,7 @@ def login():
                 session['username'] = user_data.username
                 return redirect(url_for('index'))
 
-        # Add flash message - Failed to login
+        flash('Wrong email or password.')
         return redirect(url_for('login'))
 
 
@@ -197,11 +198,12 @@ def login():
 def register():
     if request.method == 'GET':
         context = get_default_context()
+        context['messages'] = get_flashed_messages()
+
         return render_template('register.html', **context)
 
     if request.method == 'POST':
         db_session = get_session()
-        err = False
 
         username = request.form['username']
         pwd = request.form['password']
@@ -210,20 +212,16 @@ def register():
         permission_lvl = 2
 
         if db_session.query(User).filter(User.username == username).scalar():
-            print('User already exists')
-            err = True
+            flash('User already exists')
+            return redirect(url_for('register'))
 
         if db_session.query(User).filter(User.email == email).scalar():
-            print('Email already exists')
-            err = True
+            flash('Email already exists')
+            return redirect(url_for('register'))
 
         if pwd != pwd_repeat:
-            print('Password doesn\'t match')
-            err = True
-
-        if err:
-            context = get_default_context()
-            return render_template('register.html', **context)
+            flash('Password doesn\'t match')
+            return redirect(url_for('register'))
 
         new_user = User()
         new_user.username = username
@@ -255,13 +253,8 @@ def page_not_found():
 
 
 @app.route('/catalog/books/borrow', methods=["POST"])
+@login_required(lvl=2)
 def borrow_book():
-    if not session:
-        return redirect(url_for('login'))
-
-    if not is_authorized(2):
-        return access_denied()
-
     db_session = get_session()
     book_id = request.form['borrow_book_id']
 
@@ -280,13 +273,8 @@ def borrow_book():
 
 
 @app.route('/catalog/books/return', methods=["POST"])
+@login_required(lvl=2)
 def return_book():
-    if not session:
-        return redirect(url_for('login'))
-
-    if not is_authorized(2):
-        return access_denied()
-
     db_session = get_session()
     book_id = request.form['return_book_id']
 

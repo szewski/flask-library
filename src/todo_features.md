@@ -63,8 +63,8 @@
 - [x] remove return button from user profile if current user is different
 
 ####
-- [ ] change authorization check to decorator
-- [ ] add flash messages to login and register
+- [x] change authorization check to decorator
+- [x] add flash messages to login and register
 - [ ] add edit option for admin in book view
 - [ ] limit user profile view only for admin
 - [ ] add search feature
