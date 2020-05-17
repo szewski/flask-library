@@ -12,6 +12,12 @@ app = Flask(__name__)
 app.config.from_object("config.DevelopmentConfig")
 
 
+def redirect_url(default='index'):
+    return request.args.get('next') or \
+           request.referrer or \
+           url_for(default)
+
+
 def get_session(echo=False):
     engine = create_engine('sqlite:///db/database.db', echo=echo)
     db_session = sessionmaker(bind=engine)
@@ -295,10 +301,22 @@ def user_profile(username):
     return render_template('user_profile.html', **context)
 
 
-def redirect_url(default='index'):
-    return request.args.get('next') or \
-           request.referrer or \
-           url_for(default)
+@app.route('/search_results')
+def search_results():
+    arg = request.args.get('query')
+    db_session = get_session()
+    context = get_default_context()
+
+    books = db_session.query(Book).filter(
+        or_(
+            Book.title.contains(arg),
+            Book.author.contains(arg)
+        )
+    ).all()
+
+    context['books'] = books
+
+    return render_template('search_results.html', **context)
 
 
 @app.route('/test')

@@ -66,10 +66,10 @@
 - [x] change authorization check to decorator
 - [x] add flash messages to login and register
 - [x] add flash messages to login_required
+- [x] limit user profile view only for admin
+- [x] add search feature
+- [x] add search bar
 - [ ] add edit option for admin in book view
-- [ ] limit user profile view only for admin
-- [ ] add search feature
-- [ ] add search bar
 
 #### 
 - replace SQLalchemy with Flask-SQLalchemy
