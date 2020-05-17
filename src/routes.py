@@ -84,6 +84,7 @@ def login_required(lvl=3):
             if get_user_auth_lvl() <= lvl:
                 return func(*args, **kwargs)
             else:
+                flash('Access denied')
                 return redirect('/login')
         return wrapped_func
 
