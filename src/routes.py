@@ -242,12 +242,6 @@ def logout():
     return redirect(url_for('login'))
 
 
-@app.route('/access_denied')
-def access_denied():
-    context = get_default_context()
-    return render_template('access_denied.html', **context)
-
-
 @app.route('/page_not_found')
 def page_not_found():
     return render_template('404.html')
@@ -288,6 +282,7 @@ def return_book():
 
 
 @app.route('/user/<username>')
+@login_required(lvl=1)
 def user_profile(username):
     context = get_default_context()
 
