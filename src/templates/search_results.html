@@ -3,22 +3,25 @@
 
 {% block content %}
 {% if books %}
-<table>
+<h3 class="mb-4 text-center">Search results</h3>
+<table class="table text-center">
+    <thead class="mythead">
     <tr>
-        <th>Author</th>
-        <th>Title</th>
-        <th>Description</th>
-        <th>Borrowed</th>
+        <th scope="col">Author</th>
+        <th scope="col">Title</th>
+        <th scope="col">Description</th>
+        <th scope="col">Borrowed</th>
     </tr>
+    </thead>
     {% for book in books %}
     <tr>
-        <td>{{ book['author'] }}</td>
-        <td><a href="/catalog/books/{{ book['id'] }}">{{ book['title'] }}</a></td>
-        <td>{{ book['description'] }}</td>
+        <td scope="row">{{ book['author'] }}</td>
+        <td scope="row"><a href="/catalog/books/{{ book['id'] }}">{{ book['title'] }}</a></td>
+        <td scope="row">{{ book['description'] }}</td>
         {% if book['user_id'] != None %}
-        <td>Yes</td>
+        <td scope="row">Yes</td>
         {% else %}
-        <td>No</td>
+        <td scope="row">No</td>
         {% endif %}
     </tr>
     {% endfor %}

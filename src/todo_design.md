@@ -8,6 +8,7 @@
 - [x] book
 - [x] add book
 - [x] remove book
+- [x] search results
 - [ ] index
 - [x] user profile
 - [ ] 404
