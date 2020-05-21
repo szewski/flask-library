@@ -2,7 +2,7 @@
 {% block title %}Add book{% endblock %}
 
 {% block content %}
-<h3 class="mb-4">Add new book</h3>
+<h3 class="mb-4 text-center">Add new book</h3>
 <form class="form-group mb-4" action="add_book" method="post">
   <div class="form-group row">
     <label class="col-sm-2 col-form-label" for="isbn">ISBN:</label>
@@ -58,9 +58,9 @@
       <input class="form-control" id="website" type="text" name="website" placeholder="www.superwebsite.pl">
     </div>
   </div>
-  <div class="form-group text-right">
-    <input class="btn btn-primary mb-2" type="reset" value="Clear">
-    <input class="btn btn-primary mb-2" type="submit">
+  <div class="form-group text-center">
+    <input class="btn btn-dark mb-2" type="reset" value="Clear">
+    <input class="btn btn-dark mb-2 mx-2" type="submit">
   </div>
 </form>
 {% endblock %}

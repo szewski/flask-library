@@ -2,39 +2,57 @@
 {% block title %}Book{% endblock %}
 
 {% block content %}
-<table>
-  <tr>
-    <th>ID</th>
-    <th>Author</th>
-    <th>Description</th>
-    <th>ISBN</th>
-    <th>Pages</th>
-    <th>Published</th>
-    <th>Publisher</th>
-    <th>Subtitle</th>
-    <th>Title</th>
-    <th>Website</th>
-  </tr>
-  <tr>
-    <td>{{ book['id'] }}</td>
-    <td>{{ book['author'] }}</td>
-    <td>{{ book['description'] }}</td>
-    <td>{{ book['isbn'] }}</td>
-    <td>{{ book['pages'] }}</td>
-    <td>{{ book['published'] }}</td>
-    <td>{{ book['publisher'] }}</td>
-    <td>{{ book['subtitle'] }}</td>
-    <td>{{ book['title'] }}</td>
-    <td>{{ book['website'] }}</td>
-  </tr>
-</table>
-{% if book['user_id'] == None %}
-<form action="/catalog/books/borrow" method="POST">
-  <button name="borrow_book_id" type="submit" value="{{ book['id'] }}">Borrow</button>
-</form>
-{% elif book['user_id'] == user_id %}
-<form action="/catalog/books/return" method="POST">
-  <button name="return_book_id" type="submit" value="{{ book['id'] }}">Return</button>
-</form>
-{% endif %}
+<div class="mb-2">
+  <ul class="list-group list-group-horizontal">
+    <li class="list-group-item w-25">ID</li>
+    <li class="list-group-item w-75">{{ book['id'] }}</li>
+  </ul>
+  <ul class="list-group list-group-horizontal">
+    <li class="list-group-item w-25">Author</li>
+    <li class="list-group-item w-75">{{ book['author'] }}</li>
+  </ul>
+  <ul class="list-group list-group-horizontal">
+    <li class="list-group-item w-25">Description</li>
+    <li class="list-group-item w-75">{{ book['description'] }}</li>
+  </ul>
+  <ul class="list-group list-group-horizontal">
+    <li class="list-group-item w-25">ISBN</li>
+    <li class="list-group-item w-75">{{ book['isbn'] }}</li>
+  </ul>
+  <ul class="list-group list-group-horizontal">
+    <li class="list-group-item w-25">Pages</li>
+    <li class="list-group-item w-75">{{ book['pages'] }}</li>
+  </ul>
+  <ul class="list-group list-group-horizontal">
+    <li class="list-group-item w-25">Published</li>
+    <li class="list-group-item w-75">{{ book['published'] }}</li>
+  </ul>
+  <ul class="list-group list-group-horizontal">
+    <li class="list-group-item w-25">Publisher</li>
+    <li class="list-group-item w-75">{{ book['publisher'] }}</li>
+  </ul>
+  <ul class="list-group list-group-horizontal">
+    <li class="list-group-item w-25">Subtitle</li>
+    <li class="list-group-item w-75">{{ book['subtitle'] }}</li>
+  </ul>
+  <ul class="list-group list-group-horizontal">
+    <li class="list-group-item w-25">Title</li>
+    <li class="list-group-item w-75">{{ book['title'] }}</li>
+  </ul>
+  <ul class="list-group list-group-horizontal">
+    <li class="list-group-item w-25">Website</li>
+    <li class="list-group-item w-75"><a href="{{ book['website'] }}">{{ book['website'] }}</a></li>
+  </ul>
+</div>
+<div class="mb-2 text-center">
+  {% if book['user_id'] == None %}
+  <form action="/catalog/books/borrow" method="POST">
+    <button class="btn btn-dark mb-2" name="borrow_book_id" type="submit" value="{{ book['id'] }}">Borrow</button>
+  </form>
+  {% elif book['user_id'] == user_id %}
+  <form action="/catalog/books/return" method="POST">
+    <button class="btn btn-dark mb-2" name="return_book_id" type="submit" value="{{ book['id'] }}">Return</button>
+  </form>
+  {% endif %}
+</div>
 {% endblock %}
