@@ -71,6 +71,13 @@
 - [x] add search bar
 - [ ] add edit option for admin in book view
 
+####
+- [ ] add blueprints feature
+
+#### at the end
+- [ ] update requirements.txt
+- [ ] update README
+
 #### 
 - replace SQLalchemy with Flask-SQLalchemy
 

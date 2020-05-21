@@ -2,45 +2,65 @@
 {% block title %}Add book{% endblock %}
 
 {% block content %}
-<form action="add_book_post" method="post">
-  <div class="form-field">
-    <label for="isbn">ISBN:</label>
-    <input id="isbn" type="text" name="isbn">
+<h3 class="mb-4">Add new book</h3>
+<form class="form-group mb-4" action="add_book" method="post">
+  <div class="form-group row">
+    <label class="col-sm-2 col-form-label" for="isbn">ISBN:</label>
+    <div class="col-sm-10">
+      <input class="form-control" id="isbn" type="text" name="isbn" placeholder="1234567890000">
+    </div>
   </div>
-  <div class="form-field">
-    <label for="title">Title:</label>
-    <input id="title" type="text" name="title">
+  <div class="form-group row">
+    <label class="col-sm-2 col-form-label" for="title">Title:</label>
+    <div class="col-sm-10">
+      <input class="form-control" id="title" type="text" name="title">
+    </div>
   </div>
-  <div class="form-field">
-    <label for="subtitle">Subtitle:</label>
-    <input id="subtitle" type="text" name="subtitle">
+  <div class="form-group row">
+    <label class="col-sm-2 col-form-label" for="subtitle">Subtitle:</label>
+    <div class="col-sm-10">
+      <input class="form-control" id="subtitle" type="text" name="subtitle">
+    </div>
   </div>
-  <div class="form-field">
-    <label for="author">Author:</label>
-    <input id="author" type="text" name="author">
+  <div class="form-group row">
+    <label class="col-sm-2 col-form-label" for="author">Author:</label>
+    <div class="col-sm-10">
+      <input class="form-control" id="author" type="text" name="author">
+    </div>
   </div>
-  <div class="form-field">
-    <label for="published">Published:</label>
-    <input id="published" type="text" name="published">
+  <div class="form-group row">
+    <label class="col-sm-2 col-form-label" for="published">Published:</label>
+    <div class="col-sm-10">
+      <input class="form-control" id="published" type="text" name="published" placeholder="yyyy-mm-dd">
+    </div>
   </div>
-  <div class="form-field">
-    <label for="publisher">Publisher:</label>
-    <input id="publisher" type="text" name="publisher">
+  <div class="form-group row">
+    <label class="col-sm-2 col-form-label" for="publisher">Publisher:</label>
+    <div class="col-sm-10">
+      <input class="form-control" id="publisher" type="text" name="publisher">
+    </div>
   </div>
-  <div class="form-field">
-    <label for="pages">Pages:</label>
-    <input id="pages" type="number" name="pages">
+  <div class="form-group row">
+    <label class="col-sm-2 col-form-label" for="pages">Pages:</label>
+    <div class="col-sm-10">
+      <input class="form-control" id="pages" type="number" name="pages">
+    </div>
   </div>
-  <div class="form-field">
-    <label for="description">Description:</label>
-    <textarea id="description" type="text" name="description"></textarea>
+  <div class="form-group row">
+    <label class="col-sm-2 col-form-label" for="description">Description:</label>
+    <div class="col-sm-10">
+      <textarea class="form-control" id="description" type="text" name="description"></textarea>
+    </div>
   </div>
-  <div class="form-field">
-    <label for="website">Website:</label>
-    <input id="website" type="text" name="website">
+  <div class="form-group row">
+    <label class="col-sm-2 col-form-label" for="website">Website:</label>
+    <div class="col-sm-10">
+      <input class="form-control" id="website" type="text" name="website" placeholder="www.superwebsite.pl">
+    </div>
   </div>
-  <div class="form-field">
-    <input class="button" type="submit">
+  <div class="form-group text-right">
+    <input class="btn btn-primary mb-2" type="reset" value="Clear">
+    <input class="btn btn-primary mb-2" type="submit">
   </div>
 </form>
 {% endblock %}
