@@ -2,13 +2,13 @@
 - [x] remove css and add bootstrap to layout
 
 - [x] navbar
-- [ ] layout
+- [x] layout
 - [ ] login and register
-- [ ] catalog
-- [ ] book
-- [ ] add book
-- [ ] remove book
+- [x] catalog
+- [x] book
+- [x] add book
+- [x] remove book
 - [ ] index
-- [ ] user profile
+- [x] user profile
 - [ ] 404
 - [ ] access denied

@@ -21,7 +21,8 @@
     <img src="/static/book_logo.svg" width="30" height="30" class="d-inline-block align-top" alt="" loading="lazy">
     Flibre
   </a>
-  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+          aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
   </button>
 
@@ -30,18 +31,21 @@
       <li class="nav-item active">
         <a class="nav-link" href="/">Home</a>
       </li>
+      <li class="nav-item">
+        <a class="nav-link" href="/catalog/books">Catalog</a>
+      </li>
+      {% if permission_lvl == 1 %}
       <li class="nav-item dropdown">
-        <a class="nav-link dropdown-toggle" href="/catalog/books" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-          Catalog
+        <a class="nav-link dropdown-toggle" href="/catalog/books" id="navbarDropdown" role="button"
+           data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          Edit catalog
         </a>
         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-          <a class="dropdown-item" href="/catalog/books">Book catalog</a>
-          {% if permission_lvl == 1 %}
           <a class="dropdown-item" href="/catalog/books/add_book">Add book</a>
           <a class="dropdown-item" href="/catalog/books/remove_book">Remove book</a>
-          {% endif %}
         </div>
       </li>
+      {% endif %}
       {% if not username %}
       <li class="nav-item">
         <a class="nav-link" href="/login">Login</a>
@@ -71,8 +75,8 @@
   </div>
 </nav>
 <div class="container">
-{% block content %}
-{% endblock %}
+  {% block content %}
+  {% endblock %}
 </div>
 
 <!-- Optional JavaScript -->

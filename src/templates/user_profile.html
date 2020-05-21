@@ -2,28 +2,31 @@
 {% block title %}Profile{% endblock %}
 
 {% block content %}
-<h3>Profile</h3>
-<h1>{{ profile_username }}</h1>
-
-<h4>Borrowed books:</h4>
-<div>
-  <table>
+<div class="container w-75">
+  <h3 class="mb-4">Profile</h3>
+  <h1 class="mb-5">{{ profile_username }}</h1>
+  <h4 class="mb-4">Borrowed books:</h4>
+  <table class="table text-center">
+    <thead class="mythead">
     <tr>
-      <th>ID</th>
-      <th>Title</th>
-      <th>Description</th>
+      <th scope="col">No.</th>
+      <th scope="col">Title</th>
+      <th scope="col">Author</th>
+      <th scope="col">Return</th>
     </tr>
+    </thead>
     {% for book in borrowed_books %}
     <tr>
-      <th>{{ loop.index }}</th>
-      <th>{{ book['title'] }}</th>
-      <th>{{ book['description'] }}</th>
+      <td scope="row">{{ loop.index }}</td>
+      <td scope="row"><a href="/catalog/books/{{ book['id'] }}">{{ book['title'] }}</a></td>
+      <td scope="row">{{ book['author'] }}</td>
       {% if current_user %}
-      <th>
+      <td>
         <form action="/catalog/books/return" method="POST">
-          <button name="return_book_id" type="submit" value="{{ book['id'] }}">Return</button>
+          <button class="btn btn-dark mb-2 mx-2" name="return_book_id" type="submit" value="{{ book['id'] }}">Return
+          </button>
         </form>
-      </th>
+      </td>
       {% endif %}
     </tr>
     {% endfor %}
