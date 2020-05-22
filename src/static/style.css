@@ -13,3 +13,17 @@ body {
 .table tr {
     background-color:#fff;
 }
+
+.bd-curve {
+    background: linear-gradient(to right bottom,#ebebeb 50%,#f1f1f1 50%);
+    background-image: linear-gradient(to right bottom, #ebebeb 50%, #f1f1f1 50%);
+    background-position-x: initial;
+    background-position-y: initial;
+    background-size: initial;
+    background-repeat-x: initial;
+    background-repeat-y: initial;
+    background-attachment: initial;
+    background-origin: initial;
+    background-clip: initial;
+    background-color: initial;
+}

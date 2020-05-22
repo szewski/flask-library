@@ -10,21 +10,23 @@ Aplikacja biblioteki służy użytkownikom do zarządzania zasobami, zamawiania 
 - wyszukiwarka
 - podział na użytkowników:
   - Guest side
-    - przeglądanie
+    - przeglądanie katalogu
 
   - User side
-    - przeglądanie
+    - przeglądanie katalogu
     - wypożyczenie
     - zwrot
-    - sprawdzenie swoich wypożyczonych
+    - sprawdzenie listy wypożyczeń
+    - edycja danych profilu
     - przedłużenie wypożyczenia (bonus)
 
   - Admin side
-    - przeglądanie
+    - przeglądanie katalogu
     - podgląd stanu wypożyczeń użytkowników
     - dodawanie nowych pozycji
     - edytowanie pozycji
     - usuwanie pozycji
+    - edycja danych profili użytkowników
     - akceptowanie zamówienia - wypożyczenie przygotowane (bonus)
     - akceptacja przedłużenia wypożyczenia (bonus)
 

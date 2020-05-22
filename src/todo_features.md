@@ -73,8 +73,9 @@
 - [x] fix edit book missing description
 
 ####
-- [ ] add edit profile page
+- [x] add edit profile page
 - [ ] add blueprints feature
+- [ ] add users page for admin
 
 #### at the end
 - [ ] update requirements.txt
