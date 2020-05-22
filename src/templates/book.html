@@ -44,8 +44,8 @@
     <li class="list-group-item w-75"><a href="{{ book['website'] }}">{{ book['website'] }}</a></li>
   </ul>
 </div>
-<div class="row justify-content-center align-items-center">
-  <div class="col-md-1">
+<div class="row justify-content-md-center">
+  <div class="col-md-3">
     {% if book['user_id'] == None %}
     <form action="/catalog/books/borrow" method="POST">
       <button class="btn btn-dark mb-2" name="borrow_book_id" type="submit" value="{{ book['id'] }}">Borrow</button>
@@ -56,13 +56,15 @@
     </form>
     {% endif %}
   </div>
-  <div class="col-md-1">
-    {% if permission_lvl == 1 %}
-    <a class="btn btn-dark mb-2" href="/catalog/books/{{ book_id }}/edit" role="button">Link</a>
+  {% if permission_lvl == 1 %}
+  <div class="col-md-3">
+    <a class="btn btn-dark mb-2" href="/catalog/books/{{ book['id'] }}/edit" role="button">Edit</a>
+  </div>
+  <div class="col-md-3">
     <form action="/catalog/books/remove_book" method="POST">
       <button class="btn btn-dark mb-2" name="book_id" type="submit" value="{{ book['id'] }}">Remove</button>
     </form>
-    {% endif %}
   </div>
+  {% endif %}
 </div>
 {% endblock %}
