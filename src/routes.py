@@ -1,6 +1,6 @@
 from functools import wraps
 
-from flask import Flask, render_template, url_for, redirect, request, session, flash, get_flashed_messages
+from flask import Flask, render_template, url_for, redirect, request, session, flash, get_flashed_messages, abort
 from sqlalchemy import create_engine, or_, and_
 from sqlalchemy.orm import sessionmaker
 from werkzeug.security import check_password_hash, generate_password_hash
@@ -288,12 +288,15 @@ def return_book():
 
 
 @app.route('/user/<username>')
-@login_required(lvl=1)
+@login_required(lvl=2)
 def user_profile(username):
     context = get_default_context()
 
+    if username != context['username']:
+        abort(401)
+
     if not user_exists(username):
-        return redirect(url_for('page_not_found'))
+        abort(404)
 
     context['profile_username'] = username
     context['borrowed_books'] = get_borrowed(username)
