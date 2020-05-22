@@ -2,6 +2,10 @@ body {
     background-color: #f1f1f1;
 }
 
+h1 {
+    font-size: 4rem;
+}
+
 .bg-navbar {
     background-color: #e3e3e3;
 }
@@ -12,6 +16,16 @@ body {
 
 .table tr {
     background-color:#fff;
+}
+
+.btn-dark {
+    background-color: #1c80db;
+    border-color: #1b6cb5;
+}
+
+.btn-dark:hoover {
+    background-color: #1c80db;
+    border-color: #1b6cb5;
 }
 
 .bd-curve {
