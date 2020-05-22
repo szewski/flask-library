@@ -69,7 +69,8 @@
 - [x] limit user profile view only for admin
 - [x] add search feature
 - [x] add search bar
-- [ ] add edit book option for admin in book view
+- [x] add edit book option for admin in book view
+- [ ] fix edit book missing description
 
 ####
 - [ ] add edit profile page
