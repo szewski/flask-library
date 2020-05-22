@@ -7,23 +7,26 @@ Aplikacja biblioteki służy użytkownikom do zarządzania zasobami, zamawiania 
 #### Możliwości aplikacji:
 - rejestracja
 - logowanie
+- wyszukiwarka
 - podział na użytkowników:
   - Guest side
     - przeglądanie
 
   - User side
     - przeglądanie
-    - zamawianie
-    - sprawdzenie stanu konta
+    - wypożyczenie
+    - zwrot
+    - sprawdzenie swoich wypożyczonych
     - przedłużenie wypożyczenia (bonus)
 
   - Admin side
     - przeglądanie
-    - podgląd stanu konta użytkowników
-    - akceptowanie zamówienia - wypożyczenie przygotowane (bonus)
-    - akceptacja przedłużenia wypożyczenia (bonus)
+    - podgląd stanu wypożyczeń użytkowników
     - dodawanie nowych pozycji
     - edytowanie pozycji
+    - usuwanie pozycji
+    - akceptowanie zamówienia - wypożyczenie przygotowane (bonus)
+    - akceptacja przedłużenia wypożyczenia (bonus)
 
 #### Backend
 - server Flask

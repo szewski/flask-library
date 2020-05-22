@@ -69,10 +69,10 @@
 - [x] limit user profile view only for admin
 - [x] add search feature
 - [x] add search bar
-- [ ] add edit option for admin in book view
+- [ ] add edit book option for admin in book view
 
 ####
-- [ ] add edit profile option
+- [ ] add edit profile page
 - [ ] add blueprints feature
 
 #### at the end

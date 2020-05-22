@@ -153,6 +153,40 @@ def add_book():
         return redirect(url_for('books'))
 
 
+@app.route('/catalog/books/<int:book_id>/edit', methods=['GET', 'POST'])
+@login_required(lvl=1)
+def edit_book(book_id):
+    if request.method == 'GET':
+        db_session = get_session()
+        mybook = db_session.query(Book).filter(Book.id == book_id).scalar()
+
+        if not mybook:
+            abort(404)
+
+        context = get_default_context()
+        context['book'] = mybook
+        return render_template('edit_book.html', **context)
+
+    if request.method == 'POST':
+        db_session = get_session()
+
+        book = db_session.query(Book).filter(Book.id == book_id).one()
+        book.isbn = request.form['isbn']
+        book.author = request.form['author']
+        book.description = request.form['description']
+        book.isbn = request.form['isbn']
+        book.pages = request.form['pages']
+        book.published = request.form['published']
+        book.publisher = request.form['publisher']
+        book.subtitle = request.form['subtitle']
+        book.title = request.form['title']
+        book.website = request.form['website']
+
+        db_session.commit()
+
+        return redirect(f'/catalog/books/{book_id}')
+
+
 @app.route('/catalog/books/remove_book', methods=['GET', 'POST'])
 @login_required(lvl=1)
 def remove_book():
@@ -161,7 +195,7 @@ def remove_book():
         return render_template('remove_book.html', **context)
 
     if request.method == 'POST':
-        book_id = request.form['id']
+        book_id = request.form['book_id']
 
         db_session = get_session()
         db_session.query(Book). \

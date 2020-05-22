@@ -4,11 +4,11 @@
 {% block content %}
 <div class="w-25 mx-auto">
   <h3 class="text-center mb-4">Remove book</h3>
-  <form class="form-group mb-4" action="remove_book" method="post">
+  <form class="form-group mb-4" action="/catalog/books/remove_book" method="post">
     <div class="form-group row">
       <label class="sr-only" for="id">ID:</label>
       <div class="col mx-auto">
-        <input class="form-control" id="id" type="number" name="id" placeholder="ID">
+        <input class="form-control" id="book_id" type="number" name="book_id" placeholder="ID">
       </div>
     </div>
     <div class="form-group text-center">

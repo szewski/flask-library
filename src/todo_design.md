@@ -10,5 +10,5 @@
 - [x] add book
 - [x] remove book
 - [x] search results
-- [ ] home page
 - [x] user profile
+- [ ] home page

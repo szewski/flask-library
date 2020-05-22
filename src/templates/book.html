@@ -44,15 +44,25 @@
     <li class="list-group-item w-75"><a href="{{ book['website'] }}">{{ book['website'] }}</a></li>
   </ul>
 </div>
-<div class="mb-2 text-center">
-  {% if book['user_id'] == None %}
-  <form action="/catalog/books/borrow" method="POST">
-    <button class="btn btn-dark mb-2" name="borrow_book_id" type="submit" value="{{ book['id'] }}">Borrow</button>
-  </form>
-  {% elif book['user_id'] == user_id %}
-  <form action="/catalog/books/return" method="POST">
-    <button class="btn btn-dark mb-2" name="return_book_id" type="submit" value="{{ book['id'] }}">Return</button>
-  </form>
-  {% endif %}
+<div class="row justify-content-center align-items-center">
+  <div class="col-md-1">
+    {% if book['user_id'] == None %}
+    <form action="/catalog/books/borrow" method="POST">
+      <button class="btn btn-dark mb-2" name="borrow_book_id" type="submit" value="{{ book['id'] }}">Borrow</button>
+    </form>
+    {% elif book['user_id'] == user_id %}
+    <form action="/catalog/books/return" method="POST">
+      <button class="btn btn-dark mb-2" name="return_book_id" type="submit" value="{{ book['id'] }}">Return</button>
+    </form>
+    {% endif %}
+  </div>
+  <div class="col-md-1">
+    {% if permission_lvl == 1 %}
+    <a class="btn btn-dark mb-2" href="/catalog/books/{{ book_id }}/edit" role="button">Link</a>
+    <form action="/catalog/books/remove_book" method="POST">
+      <button class="btn btn-dark mb-2" name="book_id" type="submit" value="{{ book['id'] }}">Remove</button>
+    </form>
+    {% endif %}
+  </div>
 </div>
 {% endblock %}
