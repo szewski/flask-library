@@ -70,7 +70,7 @@
 - [x] add search feature
 - [x] add search bar
 - [x] add edit book option for admin in book view
-- [ ] fix edit book missing description
+- [x] fix edit book missing description
 
 ####
 - [ ] add edit profile page
