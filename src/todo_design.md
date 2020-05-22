@@ -3,7 +3,8 @@
 
 - [x] navbar
 - [x] layout
-- [ ] login and register
+- [x] login
+- [x] register
 - [x] catalog
 - [x] book
 - [x] add book
