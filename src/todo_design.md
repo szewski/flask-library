@@ -11,4 +11,5 @@
 - [x] remove book
 - [x] search results
 - [x] user profile
-- [ ] home page
+- [x] home page
+- [x] footer

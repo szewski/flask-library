@@ -2,19 +2,18 @@
 {% block title %}Home{% endblock %}
 
 {% block content %}
-
-<div class="col-md-12">
-  <div class="row mb-2">
+<div class="col-md-12 text-justify">
+  <div class="row mb-2 align-items-center">
     <div class="col-md-8">
-      <h1 class="mb-3">The best books in the whole world!</h1>
+      <h1 class="mb-3">The best inventory in the whole world!</h1>
       <p class="h4">Flibre is a place where you can choose from most impressive catalog ever found in the universe.
         Choose
         among adventure stories through romances and sci-fi. Something interesting for everyone. Don't waste any more
         time
         and start your adventure here.</p>
     </div>
-    <div class="col-md-4 mx-auto">
-      <img src="/static/flibre-logo.png" alt="Flibre logo" width="200" height="200">
+    <div class="col-md-4 text-center">
+      <img src="/static/flibre-logo.png" alt="Flibre logo" width="270" height="270">
     </div>
   </div>
   <div class="row">
@@ -24,5 +23,14 @@
       </div>
     </div>
   </div>
+</div>
+{% endblock %}
+
+{% block followup %}
+<div class="col-md-8 text-justify">
+  <h2>About us</h2>
+  <p class="h5">Founded in 1895, NYPL is the nation's largest public library system, featuring a unique combination of
+    88 neighborhood branches and four scholarly research centers, bringing together an extraordinary richness of
+    resources and opportunities available to all.</p>
 </div>
 {% endblock %}
