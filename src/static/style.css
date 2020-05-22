@@ -6,6 +6,10 @@ body {
     background-color: #e3e3e3;
 }
 
-.mythead th {
+.table .x-thead-dark th {
     background-color:#e3e3e3;
+}
+
+.table tr {
+    background-color:#fff;
 }

@@ -10,7 +10,5 @@
 - [x] add book
 - [x] remove book
 - [x] search results
-- [ ] index
+- [ ] home page
 - [x] user profile
-- [ ] 404
-- [ ] access denied

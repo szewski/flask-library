@@ -72,6 +72,7 @@
 - [ ] add edit option for admin in book view
 
 ####
+- [ ] add edit profile option
 - [ ] add blueprints feature
 
 #### at the end
