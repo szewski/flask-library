@@ -4,7 +4,14 @@
 {% block content %}
 <div class="container w-75">
   <h3 class="mb-4">Profile</h3>
-  <h1 class="mb-5">{{ profile_username }}</h1>
+  <div class="row">
+    <div class="mx-2">
+      <h1 class="mb-5">{{ profile_username }}</h1>
+    </div>
+    <div class="mx-2">
+      <a class="btn btn-dark mb-2" href="/user/{{ profile_username }}/edit" role="button">Edit</a>
+    </div>
+  </div>
   <h4 class="mb-4">Borrowed books:</h4>
   <table class="table text-center">
     <thead class="mythead">

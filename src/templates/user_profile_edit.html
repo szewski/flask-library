@@ -1,0 +1,50 @@
+{% extends "layout.html" %}
+{% block title %}Edit profile{% endblock %}
+
+{% block content %}
+<div class="mx-auto" style="max-width: 600px">
+  <h3 class="mb-4 text-center">Edit profile</h3>
+  {% if messages %}
+  <div class="alert alert-success">{{ messages[0] }}</div>
+  {% endif %}
+  <form class="form-group mb-4" action="edit" method="post">
+    <div class="form-group row">
+      <label class="col-sm-3 col-form-label">Username:</label>
+      <div class="col-sm-9">
+        <input class="form-control" type="text" placeholder="{{ user['username'] }}" readonly>
+      </div>
+    </div>
+    {% if permission_lvl == 1 %}
+    <div class="form-group row">
+      <label class="col-sm-3 col-form-label" for="permission_lvl">Permission level:</label>
+      <div class="col-sm-9">
+        <input class="form-control" id="permission_lvl" type="text" name="permission_lvl"
+               value="{{ user['permission_lvl'] }}">
+      </div>
+    </div>
+    {% endif %}
+    <div class="form-group row">
+      <label class="col-sm-3 col-form-label" for="email">Email:</label>
+      <div class="col-sm-9">
+        <input class="form-control" id="email" type="text" name="email" value="{{ user['email'] }}">
+      </div>
+    </div>
+    <div class="form-group row">
+      {% if permission_lvl == 1 %}
+      <label class="col-sm-3 col-form-label" for="book_limit">Book limit:</label>
+      <div class="col-sm-9">
+        <input class="form-control" id="book_limit" type="text" name="book_limit" value="{{ user['book_limit'] }}">
+      </div>
+      {% else %}
+      <label class="col-sm-3 col-form-label">Book limit:</label>
+      <div class="col-sm-9">
+        <input class="form-control" type="text" placeholder="{{ user['book_limit'] }}" readonly>
+      </div>
+      {% endif %}
+    </div>
+    <div class="form-group text-center">
+      <input class="btn btn-dark mb-2 mx-2" type="submit">
+    </div>
+  </form>
+</div>
+{% endblock %}

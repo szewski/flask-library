@@ -326,7 +326,9 @@ def return_book():
 def user_profile(username):
     context = get_default_context()
 
-    if username != context['username']:
+    if context['permission_lvl'] == 1:
+        pass
+    elif username != context['username']:
         abort(401)
 
     if not user_exists(username):
@@ -336,6 +338,50 @@ def user_profile(username):
     context['borrowed_books'] = get_borrowed(username)
     context['current_user'] = username == session.get('username')
     return render_template('user_profile.html', **context)
+
+
+@app.route('/user/<username>/edit', methods=["GET", "POST"])
+@login_required(lvl=2)
+def user_profile_edit(username):
+    if request.method == 'GET':
+        context = get_default_context()
+        context['messages'] = get_flashed_messages()
+
+        if context['permission_lvl'] == 1:
+            pass
+        elif username != context['username']:
+            abort(401)
+
+        if not user_exists(username):
+            abort(404)
+
+        db_session = get_session()
+        user = db_session.query(User).filter(User.username == username).one()
+
+        context['user'] = user
+
+        return render_template('user_profile_edit.html', **context)
+
+    if request.method == 'POST':
+        db_session = get_session()
+
+        email = request.form['email']
+        book_limit = request.form.get('book_limit')
+        permission_lvl = request.form.get('permission_lvl')
+
+        user = db_session.query(User).filter(User.username == username).one()
+
+        user.email = email
+        if permission_lvl:
+            user.permission_lvl = permission_lvl
+        if book_limit:
+            user.book_limit = book_limit
+
+        db_session.commit()
+
+        flash('Changes saved')
+
+        return redirect(f'/user/{username}/edit')
 
 
 @app.route('/search_results')
