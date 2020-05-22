@@ -78,8 +78,8 @@
 - [ ] add users page for admin
 
 #### at the end
-- [ ] update requirements.txt
-- [ ] update README
+- [x] update requirements.txt
+- [x] update README
 
 #### 
 - replace SQLalchemy with Flask-SQLalchemy

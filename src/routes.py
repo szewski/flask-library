@@ -1,6 +1,6 @@
 from functools import wraps
 
-from flask import Flask, render_template, url_for, redirect, request, session, flash, get_flashed_messages, abort
+from flask import Flask, render_template, url_for, redirect, request, session, flash, get_flashed_messages, abort, Blueprint
 from sqlalchemy import create_engine, or_, and_
 from sqlalchemy.orm import sessionmaker
 from werkzeug.security import check_password_hash, generate_password_hash
