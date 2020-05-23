@@ -118,7 +118,10 @@ def books():
 @app.route('/catalog/books/<int:book_id>')
 def book(book_id):
     db_session = get_session()
-    mybook = db_session.query(Book).filter(Book.id == book_id).one()
+    mybook = db_session.query(Book).filter(Book.id == book_id).scalar()
+
+    if not mybook:
+        abort(404)
 
     context = get_default_context()
     context['book'] = mybook
