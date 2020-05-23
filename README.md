@@ -2,7 +2,7 @@
 ## Projekt internetowej biblioteki
 
 #### Podsumowanie
-Aplikacja biblioteki służy użytkownikom do zarządzania zasobami, zamawiania pozycji oraz sprawdzania stanu konta.
+Flibre jest internetową aplikacja biblioteki. Użytkownicy mogą w niej wypożyczać oraz zwracać książki. Admin może dodać nowe pozycje, usunąć istniejące, edytować ustawienia użytkowników.
 
 #### Możliwości aplikacji:
 - rejestracja
@@ -29,6 +29,10 @@ Aplikacja biblioteki służy użytkownikom do zarządzania zasobami, zamawiania 
     - edycja danych profili użytkowników
     - akceptowanie zamówienia - wypożyczenie przygotowane (bonus)
     - akceptacja przedłużenia wypożyczenia (bonus)
+
+#### Uruchomienie
+1. Stwórz bazę danych za pomocą src/db/db_init.py
+2. Uruchom routes.py
 
 #### Backend
 - server Flask
