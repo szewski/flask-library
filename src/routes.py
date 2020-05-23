@@ -251,6 +251,7 @@ def register():
         pwd_repeat = request.form['repeat_password']
         email = request.form['email']
         permission_lvl = 2
+        book_limit = 5
 
         if db_session.query(User).filter(User.username == username).scalar():
             flash('User already exists')
@@ -269,6 +270,7 @@ def register():
         new_user.password = generate_password_hash(pwd)
         new_user.email = email
         new_user.permission_lvl = permission_lvl
+        new_user.book_limit = book_limit
 
         db_session.add(new_user)
         db_session.commit()
