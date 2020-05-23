@@ -31,8 +31,9 @@ Flibre jest internetową aplikacja biblioteki. Użytkownicy mogą w niej wypoży
     - akceptacja przedłużenia wypożyczenia (bonus)
 
 #### Uruchomienie
-1. Stwórz bazę danych za pomocą src/db/db_init.py
-2. Uruchom routes.py
+1. Zainstaluj wymagane pakiety: pip install -r requirements.txt
+2. Stwórz bazę danych za pomocą src/db/db_init.py
+3. Uruchom routes.py
 
 #### Backend
 - server Flask
@@ -41,3 +42,6 @@ Flibre jest internetową aplikacja biblioteki. Użytkownicy mogą w niej wypoży
   - https://flask.palletsprojects.com/en/1.1.x/tutorial/database/
 - szablony Jinja2
   - https://jinja.palletsprojects.com/en/2.11.x/templates/
+
+#### Autor
+Sebastian Januszewski, sebastian.januszewski1@
