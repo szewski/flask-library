@@ -7,7 +7,7 @@ class Config(object):
 
 
 class ProductionConfig(Config):
-    pass
+    SESSION_COOKIE_SECURE = False
 
 
 class DevelopmentConfig(Config):
