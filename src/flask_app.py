@@ -326,7 +326,24 @@ def return_book():
     return redirect(redirect_url())
 
 
-@app.route('/user/<username>')
+@app.route('/users')
+@login_required(lvl=1)
+def users():
+    db_session = get_session()
+    users = []
+
+    all_users = db_session.query(User).all()
+    for user in all_users:
+        count_books = db_session.query(Book).filter(Book.user_id == user.id).count()
+        users.append({'user': user, 'count_books': count_books})
+
+    context = get_default_context()
+    context['users'] = users
+
+    return render_template('users.html', **context)
+
+
+@app.route('/users/user/<username>')
 @login_required(lvl=2)
 def user_profile(username):
     context = get_default_context()
@@ -345,7 +362,7 @@ def user_profile(username):
     return render_template('user_profile.html', **context)
 
 
-@app.route('/user/<username>/edit', methods=["GET", "POST"])
+@app.route('/users/user/<username>/edit', methods=["GET", "POST"])
 @login_required(lvl=2)
 def user_profile_edit(username):
     if request.method == 'GET':
@@ -386,7 +403,7 @@ def user_profile_edit(username):
 
         flash('Changes saved')
 
-        return redirect(f'/user/{username}/edit')
+        return redirect(f'/users/user/{username}/edit')
 
 
 @app.route('/search_results')

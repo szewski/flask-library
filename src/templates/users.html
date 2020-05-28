@@ -1,0 +1,22 @@
+{% extends 'layout.html' %}
+{% block title %}Users{% endblock %}
+
+{% block content %}
+<h3 class="mb-4 text-center">Users</h3>
+<div class="mx-auto" style="max-width: 600px">
+  <table class="table text-center">
+    <thead class="x-thead-dark">
+    <tr>
+      <th scope="col">Username</th>
+      <th scope="col">Borrowed books</th>
+    </tr>
+    </thead>
+    {% for user in users %}
+    <tr>
+      <td scope="row"><a href="/users/user/{{ user['user']['username'] }}">{{ user['user']['username'] }}</a></td>
+      <td scope="row">{{ user['count_books'] }}</td>
+    </tr>
+    {% endfor %}
+  </table>
+</div>
+{% endblock %}

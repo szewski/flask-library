@@ -46,6 +46,11 @@
         </div>
       </li>
       {% endif %}
+      {% if permission_lvl == 1 %}
+      <li class="nav-item">
+        <a class="nav-link" href="/users">Users</a>
+      </li>
+      {% endif %}
       {% if not username %}
       <li class="nav-item">
         <a class="nav-link" href="/login">Login</a>
@@ -56,7 +61,7 @@
       {% endif %}
       {% if username %}
       <li class="nav-item">
-        <a class="nav-link" href="/user/{{ username }}">Profile</a>
+        <a class="nav-link" href="/users/user/{{ username }}">Profile</a>
       </li>
       <li class="nav-item">
         <a class="nav-link" href="/logout">Logout</a>

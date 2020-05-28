@@ -9,7 +9,7 @@
       <h1>{{ profile_username }}</h1>
     </div>
     <div class="mx-2">
-      <a class="btn btn-dark mb-2" href="/user/{{ profile_username }}/edit" role="button">Edit</a>
+      <a class="btn btn-dark mb-2" href="/users/user/{{ profile_username }}/edit" role="button">Edit</a>
     </div>
   </div>
   <h4 class="mb-4">Borrowed books:</h4>
@@ -19,7 +19,9 @@
       <th scope="col">No.</th>
       <th scope="col">Title</th>
       <th scope="col">Author</th>
+      {% if current_user %}
       <th scope="col">Return</th>
+      {% endif %}
     </tr>
     </thead>
     {% for book in borrowed_books %}
