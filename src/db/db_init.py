@@ -27,7 +27,7 @@ if __name__ == '__main__':
 
     query = """
     INSERT INTO "books" VALUES
-        (NULL, :author, :description, :isbn, :pages, 
+        (NULL, :author, :description, :isbn, :pages,
         :published, :publisher, :subtitle, :title, :website, NULL)
     """
 
