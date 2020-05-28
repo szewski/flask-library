@@ -9,7 +9,7 @@ from db_models import User, Book
 
 
 app = Flask(__name__)
-app.config.from_object("config.DevelopmentConfig")
+app.config.from_object("config.ProductionConfig")
 
 
 def redirect_url(default='index'):
