@@ -335,7 +335,7 @@ def users():
     all_users = db_session.query(User).all()
     for user in all_users:
         count_books = db_session.query(Book).filter(Book.user_id == user.id).count()
-        users.append({'user': user, 'count_books': count_books})
+        users.append({'username': user.username, 'count_books': count_books})
 
     context = get_default_context()
     context['users'] = users

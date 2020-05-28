@@ -13,7 +13,7 @@
     </thead>
     {% for user in users %}
     <tr>
-      <td scope="row"><a href="/users/user/{{ user['user']['username'] }}">{{ user['user']['username'] }}</a></td>
+      <td scope="row"><a href="/users/user/{{ user['username'] }}">{{ user['username'] }}</a></td>
       <td scope="row">{{ user['count_books'] }}</td>
     </tr>
     {% endfor %}
