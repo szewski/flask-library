@@ -1,6 +1,8 @@
 flask-library/Archive/
 .idea/
 database.db
+config.py
+todo*
 
 # Byte-compiled / optimized / DLL files
 __pycache__/

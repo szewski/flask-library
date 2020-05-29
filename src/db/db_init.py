@@ -1,6 +1,4 @@
-import os
 from pathlib import Path
-
 import sqlite3
 
 from json_db_controls import Database
