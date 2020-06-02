@@ -45,4 +45,4 @@ Flibre jest internetową aplikacja biblioteki. Użytkownicy mogą w niej wypoży
   - https://jinja.palletsprojects.com/en/2.11.x/templates/
 
 #### Autor
-Sebastian Januszewski, sebastian.januszewski1@
+Sebastian Januszewski
